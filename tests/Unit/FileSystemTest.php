@@ -12,7 +12,7 @@ namespace Phproberto\Joomla\Flysystem\Tests\Unit;
 use League\Flysystem\AdapterInterface;
 use Joomla\CMS\Application\CMSApplication;
 use Phproberto\Joomla\Flysystem\Filesystem;
-use Phproberto\Joomla\Flysystem\Adapter\Local;
+use Phproberto\Joomla\Flysystem\Adapter\JoomlaFolder;
 
 /**
  * JoomlaFilesystem tests.
@@ -38,7 +38,7 @@ class FilesystemTest extends TestWithEvents
 	{
 		parent::setUp();
 
-		$this->filesystem = new Filesystem(new Local);
+		$this->filesystem = new Filesystem(new JoomlaFolder);
 	}
 
 	/**
@@ -67,7 +67,7 @@ class FilesystemTest extends TestWithEvents
 		\JFactory::$application->registerEvent('onFlysystemBeforeLoadFilesystem', [$this, 'onFlysystemBeforeLoadFilesystem']);
 		\JFactory::$application->registerEvent('onFlysystemAfterLoadFilesystem', [$this, 'onFlysystemAfterLoadFilesystem']);
 
-		$adapter = new Local;
+		$adapter = new JoomlaFolder;
 		$config = ['sample' => 'value'];
 		$filesystem = new Filesystem($adapter, $config);
 

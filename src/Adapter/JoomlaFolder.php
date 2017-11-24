@@ -11,14 +11,14 @@ namespace Phproberto\Joomla\Flysystem\Adapter;
 
 use Joomla\Registry\Registry;
 use Phproberto\Joomla\Flysystem\Traits\HasEvents;
-use League\Flysystem\Adapter\Local as LocalAdapter;
+use League\Flysystem\Adapter\Local;
 
 /**
  * Joomla local file adapter.
  *
  * @since   __DEPLOY_VERSION__
  */
-final class Local extends LocalAdapter
+final class JoomlaFolder extends Local
 {
 	use HasEvents;
 
@@ -79,9 +79,9 @@ final class Local extends LocalAdapter
 	 *
 	 * @param   array  $config  Received configuration
 	 *
-	 * @return  Local
+	 * @return  self
 	 */
-	public function setConfig(array $config) : Local
+	public function setConfig(array $config) : JoomlaFolder
 	{
 		$this->config = new Registry(array_merge($this->defaults(), $config));
 

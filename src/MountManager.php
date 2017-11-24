@@ -11,9 +11,9 @@ namespace Phproberto\Joomla\Flysystem;
 
 use Joomla\CMS\Factory;
 use League\Flysystem\MountManager as BaseMountManager;
-use League\Flysystem\Adapter\Local as PureLocal;
+use League\Flysystem\Adapter\Local;
 use Joomla\CMS\Application\CMSApplication;
-use Phproberto\Joomla\Flysystem\Adapter\Local;
+use Phproberto\Joomla\Flysystem\Adapter\JoomlaFolder;
 use Phproberto\Joomla\Flysystem\JoomlaFilesystem;
 use Phproberto\Joomla\Flysystem\Traits\HasEvents;
 
@@ -55,10 +55,10 @@ final class MountManager extends BaseMountManager
 	private function coreFileSystems() : array
 	{
 		return [
-			'cache'  => new Filesystem(new PureLocal(Factory::getConfig()->get('cache_path', JPATH_CACHE))),
-			'log'    => new Filesystem(new PureLocal(Factory::getConfig()->get('log_path'))),
-			'joomla' => new Filesystem(new Local),
-			'tmp'    => new Filesystem(new PureLocal(Factory::getConfig()->get('tmp_path')))
+			'cache'  => new Filesystem(new Local(Factory::getConfig()->get('cache_path', JPATH_CACHE))),
+			'log'    => new Filesystem(new Local(Factory::getConfig()->get('log_path'))),
+			'joomla' => new Filesystem(new JoomlaFolder),
+			'tmp'    => new Filesystem(new Local(Factory::getConfig()->get('tmp_path')))
 		];
 	}
 }

@@ -10,20 +10,20 @@
 namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter;
 
 use Joomla\CMS\Application\CMSApplication;
-use Phproberto\Joomla\Flysystem\Adapter\Local;
+use Phproberto\Joomla\Flysystem\Adapter\JoomlaFolder;
 use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
 
 /**
- * Local adapter tests.
+ * JoomlaFolder adapter tests.
  *
  * @since   __DEPLOY_VERSION__
  */
-class LocalTest extends TestWithEvents
+class JoomlaFolderTest extends TestWithEvents
 {
 	/**
 	 * Tested adapter.
 	 *
-	 * @var  Local
+	 * @var  JoomlaFolder
 	 */
 	private $adapter;
 
@@ -37,7 +37,7 @@ class LocalTest extends TestWithEvents
 	{
 		parent::setUp();
 
-		$this->adapter = new Local('media', ['sample' => 'setting']);
+		$this->adapter = new JoomlaFolder('media', ['sample' => 'setting']);
 	}
 
 	/**
@@ -67,7 +67,7 @@ class LocalTest extends TestWithEvents
 		\JFactory::$application->registerEvent('onFlysystemAfterLoadAdapter', [$this, 'onFlysystemAfterLoadAdapter']);
 
 		$config = ['sample' => 'setting'];
-		$adapter = new Local('media', $config);
+		$adapter = new JoomlaFolder('media', $config);
 
 		// Test onFlysystemBeforeLoadAdapter result
 		$this->assertTrue(isset($this->calledEvents['onFlysystemBeforeLoadAdapter']));
@@ -96,13 +96,13 @@ class LocalTest extends TestWithEvents
 	/**
 	 * Triggered before adapter has been loaded.
 	 *
-	 * @param   Local           $adapter  Adapter being instatiated
+	 * @param   JoomlaFolder    $adapter  Adapter being instatiated
 	 * @param   string          $path     Path being loaded
 	 * @param   CMSApplication  $app      Application running the adapter
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemBeforeLoadAdapter(Local $adapter, &$path, CMSApplication $app)
+	public function onFlysystemBeforeLoadAdapter(JoomlaFolder $adapter, &$path, CMSApplication $app)
 	{
 		$this->calledEvents['onFlysystemBeforeLoadAdapter'] = func_get_args();
 
@@ -112,13 +112,13 @@ class LocalTest extends TestWithEvents
 	/**
 	 * Triggered after adapter has been loaded.
 	 *
-	 * @param   Local           $adapter  Adapter being instatiated
+	 * @param   JoomlaFolder    $adapter  Adapter being instatiated
 	 * @param   string          $path     Path being loaded
 	 * @param   CMSApplication  $app      Application running the adapter
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemAfterLoadAdapter(Local $adapter, $path, CMSApplication $app)
+	public function onFlysystemAfterLoadAdapter(JoomlaFolder $adapter, $path, CMSApplication $app)
 	{
 		$this->calledEvents['onFlysystemAfterLoadAdapter'] = func_get_args();
 
