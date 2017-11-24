@@ -31,6 +31,9 @@ $files = FileServer::instance();
 // Admin file. Stored in administrator/manifests/libraries/joomla.xml
 echo $files->read('admin://manifests/libraries/joomla.xml');
 
+// Cache file. Stored in cache/error.php
+echo $files->read('cache://error.php');
+
 // Image file. Stored in /images/joomla_black.png
 echo $files->read('image://joomla_black.png');
 
@@ -40,8 +43,8 @@ echo $files->read('log://error.php');
 // Layout file. Stored in /layouts/joomla/system/message.php
 echo $files->read('layout://joomla/system/message.php');
 
-// Library file. Stored in /libraries/flysystem/language/en-GB/en-GB.lib_flysystem.ini
-echo $files->read('library://flysystem/language/en-GB/en-GB.lib_flysystem.ini');
+// Library file. Stored in /libraries/joomla/filesystem/file.php
+echo $files->read('library://joomla/filesystem/file.php');
 
 // Media file. Stored in /media/jui/css/bootstrap.css
 echo $files->read('media://jui/css/bootstrap.css');
@@ -54,5 +57,8 @@ echo $files->read('plugin://content/vote/vote.xml');
 
 // Site file. Stored in /htaccess.txt
 echo $files->read('site://htaccess.txt');
+
+// Temp file. Stored in /tmp/index.html
+echo $files->read('tmp://index.html');
 
 ```
