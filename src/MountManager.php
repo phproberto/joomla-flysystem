@@ -40,11 +40,11 @@ final class MountManager extends BaseMountManager
 
 		$filesystems = array_merge($filesystems, $this->coreFileSystems());
 
-		$this->trigger('onFlysystemBeforeLoadFileManager', [&$filesystems, $this->application()]);
+		$this->trigger('onFlysystemBeforeLoadMountManager', [&$filesystems, $this->application()]);
 
 		parent::__construct($filesystems);
 
-		$this->trigger('onFlysystemAfterLoadFileManager', [$filesystems, $this->application()]);
+		$this->trigger('onFlysystemAfterLoadMountManager', [$filesystems, $this->application()]);
 	}
 
 	/**
