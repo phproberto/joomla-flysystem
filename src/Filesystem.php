@@ -30,16 +30,13 @@ final class Filesystem extends BaseFilesystem
 	 *
 	 * @param   AdapterInterface  $adapter  Relative joomla path. Defaults to root folder.
 	 * @param   array             $config   Optional configuration
-	 * @param   CMSApplication    $app      Application instantiating the filesystem.
 	 */
-	public function __construct(AdapterInterface $adapter, $config = null, CMSApplication $app = null)
+	public function __construct(AdapterInterface $adapter, $config = null)
 	{
-		$this->app = $app;
-
-		$this->trigger('onFlysystemBeforeLoadFilesystem', [&$adapter, &$config, $this->application()]);
+		$this->trigger('onFlysystemBeforeLoadFilesystem', [&$adapter, &$config]);
 
 		parent::__construct($adapter, $config);
 
-		$this->trigger('onFlysystemAfterLoadFilesystem', [$adapter, $config, $this->application()]);
+		$this->trigger('onFlysystemAfterLoadFilesystem', [$adapter, $config]);
 	}
 }

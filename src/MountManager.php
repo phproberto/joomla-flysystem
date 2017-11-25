@@ -29,22 +29,19 @@ final class MountManager extends BaseMountManager
 	/**
 	 * Constructor.
 	 *
-	 * @param   array           $filesystems  Filesystems to load
-	 * @param   CMSApplication  $app          Application loading the mount manager
+	 * @param   array  $filesystems  Filesystems to load
 	 *
 	 * @throws  \InvalidArgumentException
 	 */
-	public function __construct(array $filesystems = [], CMSApplication $app = null)
+	public function __construct(array $filesystems = [])
 	{
-		$this->app = $app;
-
 		$filesystems = array_merge($filesystems, $this->coreFileSystems());
 
-		$this->trigger('onFlysystemBeforeLoadMountManager', [&$filesystems, $this->application()]);
+		$this->trigger('onFlysystemBeforeLoadMountManager', [&$filesystems]);
 
 		parent::__construct($filesystems);
 
-		$this->trigger('onFlysystemAfterLoadMountManager', [$filesystems, $this->application()]);
+		$this->trigger('onFlysystemAfterLoadMountManager', [$filesystems]);
 	}
 
 	/**

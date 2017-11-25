@@ -23,33 +23,11 @@ use Joomla\CMS\Plugin\PluginHelper;
 trait HasEvents
 {
 	/**
-	 * Application where instance is loaded.
-	 *
-	 * @var     CMSApplication
-	 */
-	private $app;
-
-	/**
 	 * Plugins that have been already imported.
 	 *
 	 * @var  array
 	 */
 	private $importedPlugins = [];
-
-	/**
-	 * Get the active Joomla application.
-	 *
-	 * @return  CMSApplication
-	 */
-	private function application() : CMSApplication
-	{
-		if (null === $this->app)
-		{
-			$this->app = Factory::getApplication();
-		}
-
-		return $this->app;
-	}
 
 	/**
 	 * Import available plugins.
@@ -93,6 +71,6 @@ trait HasEvents
 		// Always send instance as first param
 		array_unshift($params, $this);
 
-		return (array) $this->app->triggerEvent($event, $params);
+		return (array) Factory::getApplication()->triggerEvent($event, $params);
 	}
 }

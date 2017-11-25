@@ -11,7 +11,6 @@ namespace Phproberto\Joomla\Flysystem\Tests\Unit;
 
 use Joomla\CMS\Factory;
 use League\Flysystem\Adapter\Local;
-use Joomla\CMS\Application\CMSApplication;
 use Phproberto\Joomla\Flysystem\Filesystem;
 use Phproberto\Joomla\Flysystem\MountManager;
 use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
@@ -116,13 +115,11 @@ class MountManagerTest extends TestWithEvents
 		$this->assertTrue(isset($this->calledEvents['onFlysystemBeforeLoadMountManager']));
 		$this->assertSame($manager, $this->calledEvents['onFlysystemBeforeLoadMountManager'][0]);
 		$this->assertEquals($this->coreFileSystems, array_keys($this->calledEvents['onFlysystemBeforeLoadMountManager'][1]));
-		$this->assertInstanceOf(CMSApplication::class, $this->calledEvents['onFlysystemBeforeLoadMountManager'][2]);
 
 		// Test onFlysystemAfterLoadMountManager result
 		$this->assertTrue(isset($this->calledEvents['onFlysystemAfterLoadMountManager']));
 		$this->assertSame($manager, $this->calledEvents['onFlysystemAfterLoadMountManager'][0]);
 		$this->assertEquals(array_merge($this->coreFileSystems, ['test']), array_keys($this->calledEvents['onFlysystemAfterLoadMountManager'][1]));
-		$this->assertInstanceOf(CMSApplication::class, $this->calledEvents['onFlysystemAfterLoadMountManager'][2]);
 	}
 
 	/**
@@ -130,11 +127,10 @@ class MountManagerTest extends TestWithEvents
 	 *
 	 * @param   MountManager      $mountManager  Loaded MountManager
 	 * @param   array             $filesystems   Filesystems being loaded
-	 * @param   CMSApplication    $app           Application loading the manager
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemBeforeLoadMountManager(MountManager $mountManager, array &$filesystems, CMSApplication $app)
+	public function onFlysystemBeforeLoadMountManager(MountManager $mountManager, array &$filesystems)
 	{
 		$this->calledEvents['onFlysystemBeforeLoadMountManager'] = func_get_args();
 
@@ -148,11 +144,10 @@ class MountManagerTest extends TestWithEvents
 	 *
 	 * @param   MountManager      $mountManager  Loaded MountManager
 	 * @param   array             $filesystems   Filesystems already loaded
-	 * @param   CMSApplication    $app           Application loading the manager
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemAfterLoadMountManager(MountManager $mountManager, array $filesystems, CMSApplication $app = null)
+	public function onFlysystemAfterLoadMountManager(MountManager $mountManager, array $filesystems)
 	{
 		$this->calledEvents['onFlysystemAfterLoadMountManager'] = func_get_args();
 	}

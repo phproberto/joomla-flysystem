@@ -25,20 +25,19 @@ final class JoomlaFolder extends Local
 	/**
 	 * Constructor.
 	 *
-	 * @param   string          $path    Relative Joomla path
-	 * @param   array           $config  Optional configuration
-	 * @param   CMSApplication  $app     Application where adapter is executed
+	 * @param   string  $path    Relative Joomla path
+	 * @param   array   $config  Optional configuration
 	 *
 	 * @throws  LogicException
 	 */
-	public function __construct(string $path = null, array $config = [], CMSApplication $app = null)
+	public function __construct(string $path = null, array $config = [])
 	{
-		$this->app = $app;
 		$this->setConfig($config);
 
 		$path = JPATH_SITE . ($path ? '/' . $path : null);
 
-		$this->trigger('onFlysystemBeforeLoadAdapter', [&$path, $this->application()]);
+		$this->trigger('onFlysystemBeforeLoadAdapter');
+		$this->trigger('onFlysystemBeforeLoadJoomlaFolderAdapter', [&$path]);
 
 		parent::__construct(
 			$path,
@@ -47,7 +46,8 @@ final class JoomlaFolder extends Local
 			$this->config->get('permissions')
 		);
 
-		$this->trigger('onFlysystemAfterLoadAdapter', [$path, $this->application()]);
+		$this->trigger('onFlysystemAfterLoadAdapter');
+		$this->trigger('onFlysystemAfterLoadJoomlaFolderAdapter', [$path]);
 	}
 
 	/**

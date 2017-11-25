@@ -10,7 +10,6 @@
 namespace Phproberto\Joomla\Flysystem\Tests\Unit;
 
 use League\Flysystem\AdapterInterface;
-use Joomla\CMS\Application\CMSApplication;
 use Phproberto\Joomla\Flysystem\Filesystem;
 use Phproberto\Joomla\Flysystem\Adapter\JoomlaFolder;
 
@@ -76,14 +75,12 @@ class FilesystemTest extends TestWithEvents
 		$this->assertSame($filesystem, $this->calledEvents['onFlysystemBeforeLoadFilesystem'][0]);
 		$this->assertSame($adapter, $this->calledEvents['onFlysystemBeforeLoadFilesystem'][1]);
 		$this->assertSame($config, $this->calledEvents['onFlysystemBeforeLoadFilesystem'][2]);
-		$this->assertInstanceOf(CMSApplication::class, $this->calledEvents['onFlysystemBeforeLoadFilesystem'][3]);
 
 		// Test onFlysystemAfterLoadFilesystem result
 		$this->assertTrue(isset($this->calledEvents['onFlysystemAfterLoadFilesystem']));
 		$this->assertSame($filesystem, $this->calledEvents['onFlysystemAfterLoadFilesystem'][0]);
 		$this->assertSame($adapter, $this->calledEvents['onFlysystemAfterLoadFilesystem'][1]);
 		$this->assertSame(['sample' => 'modified'], $this->calledEvents['onFlysystemAfterLoadFilesystem'][2]);
-		$this->assertInstanceOf(CMSApplication::class, $this->calledEvents['onFlysystemAfterLoadFilesystem'][3]);
 	}
 
 	/**
@@ -102,11 +99,10 @@ class FilesystemTest extends TestWithEvents
 	 * @param   Filesystem        $filesystem  Loaded environment
 	 * @param   AdapterInterface  $adapter     Loaded environment
 	 * @param   array             $config      Options to initialise environment
-	 * @param   CMSApplication    $app         Application running the filesystem
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemBeforeLoadFilesystem(Filesystem $filesystem, AdapterInterface &$adapter, &$config = null, CMSApplication $app = null)
+	public function onFlysystemBeforeLoadFilesystem(Filesystem $filesystem, AdapterInterface &$adapter, &$config = null)
 	{
 		$this->calledEvents['onFlysystemBeforeLoadFilesystem'] = func_get_args();
 
@@ -120,11 +116,10 @@ class FilesystemTest extends TestWithEvents
 	 * @param   Filesystem        $filesystem  Loaded environment
 	 * @param   AdapterInterface  $adapter     Loaded environment
 	 * @param   array             $config      Options to initialise environment
-	 * @param   CMSApplication    $app         Application running the filesystem
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemAfterLoadFilesystem(Filesystem $filesystem, AdapterInterface $adapter, $config = null, CMSApplication $app = null)
+	public function onFlysystemAfterLoadFilesystem(Filesystem $filesystem, AdapterInterface $adapter, $config = null)
 	{
 		$this->calledEvents['onFlysystemAfterLoadFilesystem'] = func_get_args();
 
