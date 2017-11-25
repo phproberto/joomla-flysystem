@@ -9,10 +9,7 @@
 
 namespace Phproberto\Joomla\Flysystem;
 
-use Joomla\CMS\Factory;
-use Joomla\CMS\Plugin\PluginHelper;
 use League\Flysystem\AdapterInterface;
-use Joomla\CMS\Application\CMSApplication;
 use Phproberto\Joomla\Flysystem\Traits\HasEvents;
 use League\Flysystem\Filesystem as BaseFilesystem;
 

@@ -37,6 +37,9 @@ class FilesystemTest extends TestWithEvents
 	{
 		parent::setUp();
 
+		\JFactory::$application->registerEvent('onFlysystemBeforeLoadFilesystem', [$this, 'onFlysystemBeforeLoadFilesystem']);
+		\JFactory::$application->registerEvent('onFlysystemAfterLoadFilesystem', [$this, 'onFlysystemAfterLoadFilesystem']);
+
 		$this->filesystem = new Filesystem(new JoomlaFolder);
 	}
 
@@ -61,26 +64,12 @@ class FilesystemTest extends TestWithEvents
 	 */
 	public function testConstructorTriggersEvents()
 	{
-		$this->calledEvents = [];
+		$expectedEvents = [
+			'onFlysystemBeforeLoadFilesystem',
+			'onFlysystemAfterLoadFilesystem'
+		];
 
-		\JFactory::$application->registerEvent('onFlysystemBeforeLoadFilesystem', [$this, 'onFlysystemBeforeLoadFilesystem']);
-		\JFactory::$application->registerEvent('onFlysystemAfterLoadFilesystem', [$this, 'onFlysystemAfterLoadFilesystem']);
-
-		$adapter = new JoomlaFolder;
-		$config = ['sample' => 'value'];
-		$filesystem = new Filesystem($adapter, $config);
-
-		// Test onFlysystemBeforeLoadFilesystem result
-		$this->assertTrue(isset($this->calledEvents['onFlysystemBeforeLoadFilesystem']));
-		$this->assertSame($filesystem, $this->calledEvents['onFlysystemBeforeLoadFilesystem'][0]);
-		$this->assertSame($adapter, $this->calledEvents['onFlysystemBeforeLoadFilesystem'][1]);
-		$this->assertSame($config, $this->calledEvents['onFlysystemBeforeLoadFilesystem'][2]);
-
-		// Test onFlysystemAfterLoadFilesystem result
-		$this->assertTrue(isset($this->calledEvents['onFlysystemAfterLoadFilesystem']));
-		$this->assertSame($filesystem, $this->calledEvents['onFlysystemAfterLoadFilesystem'][0]);
-		$this->assertSame($adapter, $this->calledEvents['onFlysystemAfterLoadFilesystem'][1]);
-		$this->assertSame(['sample' => 'modified'], $this->calledEvents['onFlysystemAfterLoadFilesystem'][2]);
+		$this->assertEquals($expectedEvents, array_keys($this->calledEvents));
 	}
 
 	/**

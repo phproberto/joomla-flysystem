@@ -12,7 +12,6 @@ namespace Phproberto\Joomla\Flysystem;
 use Joomla\CMS\Factory;
 use League\Flysystem\MountManager as BaseMountManager;
 use League\Flysystem\Adapter\Local;
-use Joomla\CMS\Application\CMSApplication;
 use Phproberto\Joomla\Flysystem\Adapter\JoomlaFolder;
 use Phproberto\Joomla\Flysystem\JoomlaFilesystem;
 use Phproberto\Joomla\Flysystem\Traits\HasEvents;
