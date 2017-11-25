@@ -63,51 +63,13 @@ final class FileServer
 	}
 
 	/**
-	 * Retrieve the translated prefix and path from redirections.
+	 * Clear the cached instance.
 	 *
-	 * @param   string  $receivedPath  Path
-	 *
-	 * @return  array
+	 * @return  void
 	 */
-	private function translatePath($receivedPath)
+	public static function clear()
 	{
-		list($prefix, $path) = $this->explodePrefixAndPath($receivedPath);
-
-		$redirectedPrefixes = $this->redirectedPrefixes();
-
-		if (!isset($redirectedPrefixes[$prefix]))
-		{
-			return $receivedPath;
-		}
-
-		list($destPrefix, $prePath) = $redirectedPrefixes[$prefix];
-
-		if (isset($prePath))
-		{
-			$path = implode('/', [$prePath, $path]);
-		}
-
-		return implode('://', [$destPrefix, $path]);
-	}
-
-	/**
-	 * Core file systems
-	 *
-	 * @return  array
-	 */
-	private function redirectedPrefixes() : array
-	{
-		return [
-			'admin'    => ['joomla', 'administrator'],
-			'image'    => ['joomla', 'images'],
-			'layout'   => ['joomla', 'layouts'],
-			'library'  => ['joomla', 'libraries'],
-			'media'    => ['joomla', 'media'],
-			'module'   => ['joomla', 'modules'],
-			'plugin'   => ['joomla', 'plugins'],
-			'site'     => ['joomla', ''],
-			'template' => ['joomla', 'templates']
-		];
+		self::$instance = null;
 	}
 
 	/**
@@ -170,5 +132,53 @@ final class FileServer
 		}
 
 		return self::$instance;
+	}
+
+	/**
+	 * Core file systems
+	 *
+	 * @return  array
+	 */
+	private function redirectedPrefixes() : array
+	{
+		return [
+			'admin'    => ['joomla', 'administrator'],
+			'image'    => ['joomla', 'images'],
+			'layout'   => ['joomla', 'layouts'],
+			'library'  => ['joomla', 'libraries'],
+			'media'    => ['joomla', 'media'],
+			'module'   => ['joomla', 'modules'],
+			'plugin'   => ['joomla', 'plugins'],
+			'site'     => ['joomla', ''],
+			'template' => ['joomla', 'templates']
+		];
+	}
+
+	/**
+	 * Retrieve the translated prefix and path from redirections.
+	 *
+	 * @param   string  $receivedPath  Path
+	 *
+	 * @return  array
+	 */
+	private function translatePath($receivedPath)
+	{
+		list($prefix, $path) = $this->explodePrefixAndPath($receivedPath);
+
+		$redirectedPrefixes = $this->redirectedPrefixes();
+
+		if (!isset($redirectedPrefixes[$prefix]))
+		{
+			return $receivedPath;
+		}
+
+		list($destPrefix, $prePath) = $redirectedPrefixes[$prefix];
+
+		if (isset($prePath))
+		{
+			$path = implode('/', [$prePath, $path]);
+		}
+
+		return implode('://', [$destPrefix, $path]);
 	}
 }

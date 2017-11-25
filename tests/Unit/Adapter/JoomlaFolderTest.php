@@ -76,6 +76,10 @@ class JoomlaFolderTest extends TestWithEvents
 		];
 
 		$this->assertSame($expectedTriggeredEvents, array_keys($this->calledEvents));
+
+		$this->assertTrue($this->adapter->config()->get('onFlysystemBeforeLoadAdapter'));
+		$this->assertTrue($this->adapter->config()->get('onFlysystemBeforeLoadJoomlaFolderAdapter'));
+		$this->assertTrue($this->adapter->config()->get('onFlysystemAfterLoadAdapter'));
 		$this->assertTrue($this->adapter->config()->get('onFlysystemAfterLoadJoomlaFolderAdapter'));
 	}
 
@@ -98,8 +102,6 @@ class JoomlaFolderTest extends TestWithEvents
 	 */
 	public function onFlysystemBeforeLoadAdapter(AdapterInterface $adapter)
 	{
-		$this->assertNull($adapter->config()->get('onFlysystemBeforeLoadAdapter'));
-
 		$this->calledEvents['onFlysystemBeforeLoadAdapter'] = func_get_args();
 
 		$adapter->config()->set('onFlysystemBeforeLoadAdapter', true);
@@ -113,11 +115,8 @@ class JoomlaFolderTest extends TestWithEvents
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemBeforeLoadJoomlaFolderAdapter(JoomlaFolder $adapter, &$path)
+	public function onFlysystemBeforeLoadJoomlaFolderAdapter(JoomlaFolder $adapter, string &$path)
 	{
-		$this->assertTrue($adapter->config()->get('onFlysystemBeforeLoadAdapter'));
-		$this->assertNull($adapter->config()->get('onFlysystemBeforeLoadJoomlaFolderAdapter'));
-
 		$this->calledEvents['onFlysystemBeforeLoadJoomlaFolderAdapter'] = func_get_args();
 
 		$adapter->config()->set('onFlysystemBeforeLoadJoomlaFolderAdapter', true);
@@ -132,9 +131,6 @@ class JoomlaFolderTest extends TestWithEvents
 	 */
 	public function onFlysystemAfterLoadAdapter(AdapterInterface $adapter)
 	{
-		$this->assertTrue($adapter->config()->get('onFlysystemBeforeLoadJoomlaFolderAdapter'));
-		$this->assertNull($adapter->config()->get('onFlysystemAfterLoadAdapter'));
-
 		$this->calledEvents['onFlysystemAfterLoadAdapter'] = func_get_args();
 
 		$adapter->config()->set('onFlysystemAfterLoadAdapter', true);
@@ -148,11 +144,8 @@ class JoomlaFolderTest extends TestWithEvents
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemAfterLoadJoomlaFolderAdapter(JoomlaFolder $adapter, $path)
+	public function onFlysystemAfterLoadJoomlaFolderAdapter(JoomlaFolder $adapter, string $path)
 	{
-		$this->assertTrue($adapter->config()->get('onFlysystemAfterLoadAdapter'));
-		$this->assertNull($adapter->config()->get('onFlysystemAfterLoadJoomlaFolderAdapter'));
-
 		$this->calledEvents['onFlysystemAfterLoadJoomlaFolderAdapter'] = func_get_args();
 
 		$adapter->config()->set('onFlysystemAfterLoadJoomlaFolderAdapter', true);

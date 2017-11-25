@@ -101,4 +101,41 @@ class FileServerTest extends \TestCaseDatabase
 		$this->assertTrue($this->fileServer->has('plugin://content/vote/vote.xml'));
 		$this->assertTrue($this->fileServer->has('site://htaccess.txt'));
 	}
+
+	/**
+	 * @test
+	 *
+	 * @return void
+	 */
+	public function clearRemovesCachedInstance()
+	{
+		$reflection = new \ReflectionClass($this->fileServer);
+
+		$instanceProperty = $reflection->getProperty('instance');
+		$instanceProperty->setAccessible(true);
+
+		$this->assertInstanceOf(FileServer::class, $instanceProperty->getValue($this->fileServer));
+
+		FileServer::clear();
+
+		$this->assertSame(null, $instanceProperty->getValue($this->fileServer));
+	}
+
+	/**
+	 * instance returns cached instance.
+	 *
+	 * @return  void
+	 */
+	public function testInstanceReturnsCachedInstance()
+	{
+		$reflection = new \ReflectionClass($this->fileServer);
+
+		$managerProperty = $reflection->getProperty('manager');
+		$managerProperty->setAccessible(true);
+		$managerProperty->setValue($this->fileServer, 'foo');
+
+		$newInstance = FileServer::instance();
+
+		$this->assertSame('foo', $managerProperty->getValue($newInstance));
+	}
 }
