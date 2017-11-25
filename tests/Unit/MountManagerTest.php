@@ -54,6 +54,9 @@ class MountManagerTest extends TestWithEvents
 			]
 		);
 
+		Factory::$application->registerEvent('onFlysystemBeforeLoadMountManager', [$this, 'onFlysystemBeforeLoadMountManager']);
+		Factory::$application->registerEvent('onFlysystemAfterLoadMountManager', [$this, 'onFlysystemAfterLoadMountManager']);
+
 		$folder = __DIR__;
 		$adapter = new Local($folder);
 		$this->manager = new MountManager(['test' => new Filesystem($adapter)]);
@@ -75,7 +78,8 @@ class MountManagerTest extends TestWithEvents
 			'cache',
 			'log',
 			'joomla',
-			'tmp'
+			'tmp',
+			'test2'
 		];
 
 		$filesystems = $filesystemsProperty->getValue($this->manager);
@@ -104,22 +108,12 @@ class MountManagerTest extends TestWithEvents
 	 */
 	public function testConstructorTriggersEvents()
 	{
-		$this->calledEvents = [];
+		$expectedEvents = [
+			'onFlysystemBeforeLoadMountManager',
+			'onFlysystemAfterLoadMountManager'
+		];
 
-		\JFactory::$application->registerEvent('onFlysystemBeforeLoadMountManager', [$this, 'onFlysystemBeforeLoadMountManager']);
-		\JFactory::$application->registerEvent('onFlysystemAfterLoadMountManager', [$this, 'onFlysystemAfterLoadMountManager']);
-
-		$manager = new MountManager;
-
-		// Test onFlysystemBeforeLoadMountManager result
-		$this->assertTrue(isset($this->calledEvents['onFlysystemBeforeLoadMountManager']));
-		$this->assertSame($manager, $this->calledEvents['onFlysystemBeforeLoadMountManager'][0]);
-		$this->assertEquals($this->coreFileSystems, array_keys($this->calledEvents['onFlysystemBeforeLoadMountManager'][1]));
-
-		// Test onFlysystemAfterLoadMountManager result
-		$this->assertTrue(isset($this->calledEvents['onFlysystemAfterLoadMountManager']));
-		$this->assertSame($manager, $this->calledEvents['onFlysystemAfterLoadMountManager'][0]);
-		$this->assertEquals(array_merge($this->coreFileSystems, ['test']), array_keys($this->calledEvents['onFlysystemAfterLoadMountManager'][1]));
+		$this->assertEquals($expectedEvents, array_keys($this->calledEvents));
 	}
 
 	/**
@@ -136,7 +130,7 @@ class MountManagerTest extends TestWithEvents
 
 		$folder = __DIR__;
 		$adapter = new Local($folder);
-		$filesystems['test'] = new Filesystem($adapter);
+		$filesystems['test2'] = new Filesystem($adapter);
 	}
 
 	/**
