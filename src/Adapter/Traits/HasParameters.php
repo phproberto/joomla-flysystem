@@ -39,13 +39,25 @@ trait HasParameters
 	}
 
 	/**
-	 * Retrieve the adapter params.
+	 * Check if this adapter has params.
 	 *
-	 * @return  Registry
+	 * @return  boolean
 	 */
-	public function params() : Registry
+	public function hasParams()
 	{
-		return $this->params;
+		return null !== $this->params;
+	}
+
+	/**
+	 * Init parameters.
+	 *
+	 * @return  self
+	 */
+	protected function initParams() : AdapterInterface
+	{
+		$this->params = new Registry($this->defaults());
+
+		return $this;
 	}
 
 	/**
@@ -62,17 +74,13 @@ trait HasParameters
 	}
 
 	/**
-	 * Set the adapter configuration.
+	 * Retrieve the adapter parameters.
 	 *
-	 * @param   array  $params  Received configuration
-	 *
-	 * @return  self
+	 * @return  Registry
 	 */
-	public function setParams(array $params) : AdapterInterface
+	public function params() : Registry
 	{
-		$this->params = new Registry(array_merge($this->defaults(), $params));
-
-		return $this;
+		return $this->params;
 	}
 
 	/**
@@ -85,7 +93,47 @@ trait HasParameters
 	 */
 	public function setParam($name, $value) : AdapterInterface
 	{
+		if (!$this->hasParams())
+		{
+			$this->initParams();
+		}
+
 		$this->params->set($name, $value);
+
+		return $this;
+	}
+
+	/**
+	 * Set the adapter parameters. Overwrites previously existing parameter.
+	 *
+	 * @param   array  $params  Parameters to set.
+	 *
+	 * @return  self
+	 */
+	public function setParams(array $params) : AdapterInterface
+	{
+		$this->initParams();
+
+		$this->params = new Registry($params);
+
+		return $this;
+	}
+
+	/**
+	 * Update parameters (without delete previous parameters).
+	 *
+	 * @param   array  $params  Parameters to set.
+	 *
+	 * @return  self
+	 */
+	public function updateParams(array $params) : AdapterInterface
+	{
+		if (!$this->hasParams())
+		{
+			$this->initParams();
+		}
+
+		$this->params = new Registry(array_merge($this->params->toArray(), $params));
 
 		return $this;
 	}
