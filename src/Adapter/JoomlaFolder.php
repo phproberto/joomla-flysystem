@@ -10,8 +10,9 @@
 namespace Phproberto\Joomla\Flysystem\Adapter;
 
 use Joomla\Registry\Registry;
-use Phproberto\Joomla\Flysystem\Traits\HasEvents;
 use League\Flysystem\Adapter\Local;
+use Phproberto\Joomla\Flysystem\Traits\HasEvents;
+use Phproberto\Joomla\Flysystem\Adapter\Traits\HasParameters;
 
 /**
  * Joomla local file adapter.
@@ -20,7 +21,7 @@ use League\Flysystem\Adapter\Local;
  */
 final class JoomlaFolder extends Local
 {
-	use HasEvents;
+	use HasEvents, HasParameters;
 
 	/**
 	 * Constructor.
@@ -32,7 +33,7 @@ final class JoomlaFolder extends Local
 	 */
 	public function __construct(string $path = null, array $config = [])
 	{
-		$this->setConfig($config);
+		$this->setParams($config);
 
 		$path = JPATH_SITE . ($path ? '/' . $path : null);
 
@@ -41,9 +42,9 @@ final class JoomlaFolder extends Local
 
 		parent::__construct(
 			$path,
-			$this->config->get('writeFlags'),
-			$this->config->get('linkHandling'),
-			$this->config->get('permissions')
+			$this->param('writeFlags'),
+			$this->param('linkHandling'),
+			$this->param('permissions')
 		);
 
 		$this->trigger('onFlysystemAfterLoadAdapter');
@@ -51,40 +52,16 @@ final class JoomlaFolder extends Local
 	}
 
 	/**
-	 * Retrieve the adapter config.
-	 *
-	 * @return  Registry
-	 */
-	public function config() : Registry
-	{
-		return $this->config;
-	}
-
-	/**
 	 * Default configuration to ensure that correct data is sent to parent class.
 	 *
 	 * @return  array
 	 */
-	private function defaults() : array
+	protected function defaults() : array
 	{
 		return [
 			'writeFlags'   => LOCK_EX,
 			'linkHandling' => static::DISALLOW_LINKS,
 			'permissions'  => []
 		];
-	}
-
-	/**
-	 * Set the adapter configuration.
-	 *
-	 * @param   array  $config  Received configuration
-	 *
-	 * @return  self
-	 */
-	public function setConfig(array $config) : JoomlaFolder
-	{
-		$this->config = new Registry(array_merge($this->defaults(), $config));
-
-		return $this;
 	}
 }
