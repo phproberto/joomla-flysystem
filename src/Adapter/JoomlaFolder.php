@@ -33,12 +33,12 @@ final class JoomlaFolder extends Local
 	 */
 	public function __construct(string $path = null, array $config = [])
 	{
-		$this->setParams($config);
-
 		$path = JPATH_SITE . ($path ? '/' . $path : null);
 
 		$this->trigger('onFlysystemBeforeLoadAdapter');
-		$this->trigger('onFlysystemBeforeLoadJoomlaFolderAdapter', [&$path]);
+		$this->trigger('onFlysystemBeforeLoadJoomlaFolderAdapter', [&$path, &$config]);
+
+		$this->updateParams($config);
 
 		parent::__construct(
 			$path,
@@ -48,7 +48,7 @@ final class JoomlaFolder extends Local
 		);
 
 		$this->trigger('onFlysystemAfterLoadAdapter');
-		$this->trigger('onFlysystemAfterLoadJoomlaFolderAdapter', [$path]);
+		$this->trigger('onFlysystemAfterLoadJoomlaFolderAdapter', [$path, $config]);
 	}
 
 	/**
