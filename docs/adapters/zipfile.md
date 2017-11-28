@@ -1,1 +1,1 @@
-## Azure
+## ZipFile adapter

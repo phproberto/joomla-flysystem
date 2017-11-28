@@ -1,1 +1,1 @@
-## Azure
+## JoomlaFolder
