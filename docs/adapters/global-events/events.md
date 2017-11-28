@@ -1,8 +1,8 @@
-### Global adapters events.
+#### Global adapters events. <a id="global-adapters-events"></a>
 
 These events allow to perform common actions for all the adapters with a single entry point.
 
-**onFlysystemBeforeLoadAdapter** Called before an AdapterInterface instance is created.
+**onFlysystemBeforeLoadAdapter** Called before an AdapterInterface instance is created. <a id="onFlysystemBeforeLoadAdapter"></a>
 
 ```php
 /**
@@ -15,7 +15,7 @@ These events allow to perform common actions for all the adapters with a single 
 public function onFlysystemBeforeLoadAdapter(AdapterInterface $adapter)
 ```
 
-**onFlysystemAfterLoadAdapter** Called after an AdapterInterface instance has been created.
+**onFlysystemAfterLoadAdapter** Called after an AdapterInterface instance has been created. <a id="onFlysystemAfterLoadAdapter"></a>
 
 ```php
 /**
