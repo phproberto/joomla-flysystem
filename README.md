@@ -33,114 +33,17 @@ Available wrappers:
 
 For common stuff you can do with Flysystem please check its [documentation](http://flysystem.thephpleague.com/).
 
-### JoomlaFolder usage
+### Usage.
 
-For common stuff you can do with Flysystem please check its [documentation](http://flysystem.thephpleague.com/).
+Check [Documentation](https://phproberto.github.io/joomla-flysystem) to get information about how to use it.
 
-`JoomlaFolder` adapter supports aliases for commonly used folders. Examples:  
+## Requirements <a id="requirements"></a>
 
-```php
-use Phproberto\Joomla\Flysystem\FileServer;
+* PHP 7.0+ or higher
+* Joomla! 3.8.1 or higher
 
-$files = FileServer::instance();
+## Copyright & License <a id="license"></a>
 
-// Admin file. Stored in administrator/manifests/libraries/joomla.xml
-echo $files->read('admin://manifests/libraries/joomla.xml');
+This library is licensed under [MIT LICENSE](./LICENSE).  
 
-// Cache file. Stored in cache/error.php
-echo $files->read('cache://error.php');
-
-// Image file. Stored in /images/joomla_black.png
-echo $files->read('image://joomla_black.png');
-
-// Log file. Stored in /administrator/logs/error.php
-echo $files->read('log://error.php');
-
-// Layout file. Stored in /layouts/joomla/system/message.php
-echo $files->read('layout://joomla/system/message.php');
-
-// Library file. Stored in /libraries/joomla/filesystem/file.php
-echo $files->read('library://joomla/filesystem/file.php');
-
-// Media file. Stored in /media/jui/css/bootstrap.css
-echo $files->read('media://jui/css/bootstrap.css');
-
-// Module file. Stored in /modules/mod_menu/mod_menu.xml
-echo $files->read('module://mod_menu/mod_menu.xml');
-
-// Plugin file. Stored in /plugins/content/vote/vote.xml
-echo $files->read('plugin://content/vote/vote.xml');
-
-// Site file. Stored in /htaccess.txt
-echo $files->read('site://htaccess.txt');
-
-// Temp file. Stored in /tmp/index.html
-echo $files->read('tmp://index.html');
-
-```
-
-### Filesystem events.
-
-Events triggered when a filesystem is loaded.
-
-**onFlysystemBeforeLoadFilesystem** Called before an filesystem instance is created.
-
-```php
-/**
- * Triggered before filesystem has been loaded.
- *
- * @param   Filesystem        $filesystem  Loaded environment
- * @param   AdapterInterface  $adapter     Loaded environment
- * @param   array             $config      Options to initialise environment
- *
- * @return  void
- */
-public function onFlysystemBeforeLoadFilesystem(Filesystem $filesystem, AdapterInterface &$adapter, &$config = null)
-```
-
-**onFlysystemAfterLoadFilesystem** Called after an filesystem instance has been created.
-
-```php
-/**
- * Triggered after filesystem has been loaded.
- *
- * @param   Filesystem        $filesystem  Loaded environment
- * @param   AdapterInterface  $adapter     Loaded environment
- * @param   array             $config      Options to initialise environment
- *
- * @return  void
- */
-public function onFlysystemAfterLoadFilesystem(Filesystem $filesystem, AdapterInterface $adapter, $config = null)
-```
-
-### MountManager events.
-
-**onFlysystemBeforeLoadMountManager** Called before a MountManager instance is created.
-
-```php
-/**
- * Triggered before MountManager has been loaded.
- *
- * @param   MountManager      $mountManager  Loaded MountManager
- * @param   array             $filesystems   Filesystems being loaded
- *
- * @return  void
- */
-public function onFlysystemBeforeLoadMountManager(MountManager $mountManager, array &$filesystems)
-```
-
-**onFlysystemAfterLoadMountManager** Called after a MountManager instance has been created.
-
-```php
-/**
- * Triggered after MountManager has been loaded.
- *
- * @param   MountManager      $mountManager  Loaded MountManager
- * @param   array             $filesystems   Filesystems already loaded
- *
- * @return  void
- */
-public function onFlysystemAfterLoadMountManager(MountManager $mountManager, array $filesystems)
-```
-
-
+Copyright (C) 2017 [Roberto Segura López](http://phproberto.com) - All rights reserved.  

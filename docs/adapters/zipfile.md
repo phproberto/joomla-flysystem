@@ -1,4 +1,4 @@
-## ZipFile adapter
+## ZipFile Adapter
 
 Wrapper for [Flysystem Zip Adapter](https://github.com/thephpleague/flysystem-ziparchive) with Joomla events support.
 
