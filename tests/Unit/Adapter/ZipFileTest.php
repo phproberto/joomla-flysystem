@@ -10,22 +10,22 @@
 namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter;
 
 use Joomla\CMS\Factory;
-use Spatie\Dropbox\Client;
 use League\Flysystem\AdapterInterface;
-use Phproberto\Joomla\Flysystem\Adapter\Dropbox;
+use Phproberto\Joomla\Flysystem\Adapter\ZipFile;
 use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
+use ZipArchive;
 
 /**
- * Dropbox adapter tests.
+ * ZipFile adapter tests.
  *
  * @since   __DEPLOY_VERSION__
  */
-class DropboxTest extends TestWithEvents
+class ZipFileTest extends TestWithEvents
 {
 	/**
 	 * Tested adapter.
 	 *
-	 * @var  Dropbox
+	 * @var  ZipFile
 	 */
 	private $adapter;
 
@@ -40,11 +40,11 @@ class DropboxTest extends TestWithEvents
 		parent::setUp();
 
 		Factory::$application->registerEvent('onFlysystemBeforeLoadAdapter', [$this, 'onFlysystemBeforeLoadAdapter']);
-		Factory::$application->registerEvent('onFlysystemBeforeLoadDropboxAdapter', [$this, 'onFlysystemBeforeLoadDropboxAdapter']);
+		Factory::$application->registerEvent('onFlysystemBeforeLoadZipFileAdapter', [$this, 'onFlysystemBeforeLoadZipFileAdapter']);
 		Factory::$application->registerEvent('onFlysystemAfterLoadAdapter', [$this, 'onFlysystemAfterLoadAdapter']);
-		Factory::$application->registerEvent('onFlysystemAfterLoadDropboxAdapter', [$this, 'onFlysystemAfterLoadDropboxAdapter']);
+		Factory::$application->registerEvent('onFlysystemAfterLoadZipFileAdapter', [$this, 'onFlysystemAfterLoadZipFileAdapter']);
 
-		$this->adapter = new Dropbox(new Client('my-token'));
+		$this->adapter = new ZipFile(JPATH_SITE . '/test.zip');
 	}
 
 	/**
@@ -56,9 +56,9 @@ class DropboxTest extends TestWithEvents
 	{
 		$expectedTriggeredEvents = [
 			'onFlysystemBeforeLoadAdapter',
-			'onFlysystemBeforeLoadDropboxAdapter',
+			'onFlysystemBeforeLoadZipFileAdapter',
 			'onFlysystemAfterLoadAdapter',
-			'onFlysystemAfterLoadDropboxAdapter'
+			'onFlysystemAfterLoadZipFileAdapter'
 		];
 
 		$this->assertSame($expectedTriggeredEvents, array_keys($this->calledEvents));
@@ -67,7 +67,13 @@ class DropboxTest extends TestWithEvents
 		$pathPrefixProperty = $reflection->getProperty('pathPrefix');
 		$pathPrefixProperty->setAccessible(true);
 
+		// Plugin could modify prefix
 		$this->assertSame('modifiedPrefix/', $pathPrefixProperty->getValue($this->adapter));
+
+		$archive = (array) $this->adapter->getArchive();
+
+		// Plugin could modify location
+		$this->assertSame('test.test.zip', basename($archive['filename']));
 	}
 
 	/**
@@ -85,16 +91,18 @@ class DropboxTest extends TestWithEvents
 	/**
 	 * Triggered before adapter has been loaded.
 	 *
-	 * @param   Dropbox  $adapter  Adapter being instatiated
-	 * @param   Client   $client   Client to connect to Dropbox
-	 * @param   string   $prefix   Optional prefix.
+	 * @param   ZipFile     $adapter   Adapter being instatiated
+	 * @param   string      $location  Path to the zip file
+	 * @param   ZipArchive  $file      Source file.
+	 * @param   string      $prefix    Optional prefix
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemBeforeLoadDropboxAdapter(Dropbox $adapter, Client $client, string &$prefix)
+	public function onFlysystemBeforeLoadZipFileAdapter(ZipFile $adapter, &$location, ZipArchive $file = null, &$prefix = null)
 	{
 		$this->calledEvents[__FUNCTION__] = func_get_args();
 
+		$location = str_replace('.zip', '.test.zip', $location);
 		$prefix = 'modifiedPrefix';
 	}
 
@@ -113,13 +121,14 @@ class DropboxTest extends TestWithEvents
 	/**
 	 * Triggered after adapter has been loaded.
 	 *
-	 * @param   Dropbox  $adapter  Adapter being instatiated
-	 * @param   Client   $client   Client to connect to Dropbox
-	 * @param   string   $prefix   Optional prefix.
+	 * @param   ZipFile     $adapter   Adapter being instatiated
+	 * @param   string      $location  Path to the zip file
+	 * @param   ZipArchive  $file      Source file.
+	 * @param   string      $prefix    Optional prefix
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemAfterLoadDropboxAdapter(Dropbox $adapter, Client $client, string $prefix)
+	public function onFlysystemAfterLoadZipFileAdapter(ZipFile $adapter, $location, ZipArchive $file = null, $prefix = null)
 	{
 		$this->calledEvents[__FUNCTION__] = func_get_args();
 	}
