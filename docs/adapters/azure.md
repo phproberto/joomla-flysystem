@@ -5,11 +5,11 @@ Wrapper for [Flysystem adapter for the Windows Azure](https://github.com/thephpl
 1. [Usage](#usage)
 2. [Events](#events)
     * [Global events](#global-adapters-events)
-        [onFlysystemBeforeLoadAdapter](#onFlysystemBeforeLoadAdapter)
-        [onFlysystemAfterLoadAdapter](#onFlysystemAfterLoadAdapter)
+        * [onFlysystemBeforeLoadAdapter](#onFlysystemBeforeLoadAdapter)
+        * [onFlysystemAfterLoadAdapter](#onFlysystemAfterLoadAdapter)
     * [Custom events](#custom-events)
-        [onFlysystemBeforeLoadAzureAdapter](#onFlysystemBeforeLoadAzureAdapter)
-        [onFlysystemAfterLoadAzureAdapter](#onFlysystemAfterLoadAzureAdapter)
+        * [onFlysystemBeforeLoadAzureAdapter](#onFlysystemBeforeLoadAzureAdapter)
+        * [onFlysystemAfterLoadAzureAdapter](#onFlysystemAfterLoadAzureAdapter)
 
 ### 1. Usage <a id="usage"></a>
 
