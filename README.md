@@ -17,11 +17,25 @@ This is a way to provide an extendable system to easily access from Joomla to fi
 * Provides a `FileServer` class to access all the existing filesystems in a single and easy way.
 * All the classes are still usable separately to provide maximum flexibility for devs.
 
+### Supported adapters.
+
+All the [official adapters](https://github.com/thephpleague/flysystem#adapters) are supported but system is shipped with specific wrappers for most commonly used adapters:
+
+* [AWS S3 v3](./src/Adapter/AwsS3.php). Load files stored in AWS S3.
+* [Azure](./src/Adapter/Azure.php). Load files stored in Azure.
+* [Dropbox](./src/Adapter/Dropbox.php). Load files stored in Dropbox.
+* [Ftp](./src/Adapter/Ftp.php). Load files stored in an FTP server.
+* [JoomlaFolder](./src/Adapter/JoomlaFolder.php). Load files from the joomla site.
+* [WebDAV](./src/Adapter/WebDAB.php). Load WebDAV files.
+* [ZipFile](./src/Adapter/ZipFile.php). Load & store files from zip files. Requires `php-zip` extension installed.
+
+Wrappers allow that plugins connect when an adapter or filesystem is loaded to allow customisations.
+
 ### How to use it?
 
 For common stuff you can do with Flysystem please check its [documentation]([Flysystem](http://flysystem.thephpleague.com/).
 
-This is a fast preview of what is already implemented:  
+`JoomlaFolder` adapter supports aliases for commonly used folders. Examples:  
 
 ```php
 use Phproberto\Joomla\Flysystem\FileServer;
