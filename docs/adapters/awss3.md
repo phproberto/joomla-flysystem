@@ -4,7 +4,9 @@ Wrapper for [Flysystem Adapter for AWS SDK V3](https://github.com/thephpleague/f
 
 1. [Usage](#usage)
 2. [Events](#events)
-    {% include_relative global-events/index.md %}
+    * [Global events](#global-adapters-events)
+        [onFlysystemBeforeLoadAdapter](#onFlysystemBeforeLoadAdapter)
+        [onFlysystemAfterLoadAdapter](#onFlysystemAfterLoadAdapter)
     * [Custom events](#custom-events)
         [onFlysystemBeforeLoadAwsS3Adapter](#onFlysystemBeforeLoadAwsS3Adapter)
         [onFlysystemAfterLoadAwsS3Adapter](#onFlysystemAfterLoadAwsS3Adapter)
@@ -37,7 +39,7 @@ $filesystem = new Filesystem($adapter);
 
 ### 2. Events <a id="events"></a>
 
-{% include_relative global-events/events.md %}
+{% include_relative global/events.md %}
 
 ### Custom events <a id="custom-events"></a>
 
