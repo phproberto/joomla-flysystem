@@ -96,23 +96,6 @@ class FtpTest extends TestWithEvents
 	}
 
 	/**
-	 * @test
-	 *
-	 * @return void
-	 */
-	public function canReadFile()
-	{
-		$expected = [
-			'type'       => 'file',
-			'path'       => '1KB.zip',
-			'visibility' => 'public',
-			'size'       => 1024
-		];
-
-		$this->assertSame($expected, $this->adapter->has('1KB.zip'));
-	}
-
-	/**
 	 * Triggered before adapter has been loaded.
 	 *
 	 * @param   AdapterInterface  $adapter  Adapter being instatiated
