@@ -16,6 +16,8 @@ Wrapper for [Flysystem FTP Adapter](https://github.com/thephpleague/flysystem/bl
 To use the adapter programmatically you can use:  
 
 ```php
+JLoader::import('flysystem.library');
+
 use Phproberto\Joomla\Flysystem\Filesystem;
 use Phproberto\Joomla\Flysystem\Adapter\Ftp as Adapter;
 

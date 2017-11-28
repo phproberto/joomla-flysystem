@@ -16,6 +16,8 @@ Wrapper for [Spatie Dropbox v2 adapter](https://github.com/spatie/flysystem-drop
 To use the adapter programmatically you can use:  
 
 ```php
+JLoader::import('flysystem.library');
+
 use Spatie\Dropbox\Client;
 use Phproberto\Joomla\Flysystem\Filesystem;
 use Phproberto\Joomla\Flysystem\Adapter\Dropbox;

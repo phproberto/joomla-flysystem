@@ -16,6 +16,8 @@ Wrapper for [Flysystem adapter for the Windows Azure](https://github.com/thephpl
 To use the adapter programmatically you can use: 
 
 ```php
+JLoader::import('flysystem.library');
+
 use MicrosoftAzure\Storage\Common\ServicesBuilder;
 use Phproberto\Joomla\Flysystem\Filesystem;
 use Phproberto\Joomla\Flysystem\Adapter\Azure;
