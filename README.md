@@ -31,7 +31,9 @@ Available wrappers:
 * [WebDAV](./src/Adapter/WebDAB.php). Load WebDAV files.
 * [ZipFile](./src/Adapter/ZipFile.php). Load & store files from zip files. Requires `php-zip` extension installed.
 
-### How to use it?
+For common stuff you can do with Flysystem please check its [documentation]([Flysystem](http://flysystem.thephpleague.com/).
+
+### JoomlaFolder usage
 
 For common stuff you can do with Flysystem please check its [documentation]([Flysystem](http://flysystem.thephpleague.com/).
 
