@@ -84,31 +84,31 @@ Events triggered when a filesystem is loaded.
 **onFlysystemBeforeLoadFilesystem** Called before an filesystem instance is created.
 
 ```php
-	/**
-	 * Triggered before filesystem has been loaded.
-	 *
-	 * @param   Filesystem        $filesystem  Loaded environment
-	 * @param   AdapterInterface  $adapter     Loaded environment
-	 * @param   array             $config      Options to initialise environment
-	 *
-	 * @return  void
-	 */
-	public function onFlysystemBeforeLoadFilesystem(Filesystem $filesystem, AdapterInterface &$adapter, &$config = null)
+/**
+ * Triggered before filesystem has been loaded.
+ *
+ * @param   Filesystem        $filesystem  Loaded environment
+ * @param   AdapterInterface  $adapter     Loaded environment
+ * @param   array             $config      Options to initialise environment
+ *
+ * @return  void
+ */
+public function onFlysystemBeforeLoadFilesystem(Filesystem $filesystem, AdapterInterface &$adapter, &$config = null)
 ```
 
 **onFlysystemAfterLoadFilesystem** Called after an filesystem instance has been created.
 
 ```php
-	/**
-	 * Triggered after filesystem has been loaded.
-	 *
-	 * @param   Filesystem        $filesystem  Loaded environment
-	 * @param   AdapterInterface  $adapter     Loaded environment
-	 * @param   array             $config      Options to initialise environment
-	 *
-	 * @return  void
-	 */
-	public function onFlysystemAfterLoadFilesystem(Filesystem $filesystem, AdapterInterface $adapter, $config = null)
+/**
+ * Triggered after filesystem has been loaded.
+ *
+ * @param   Filesystem        $filesystem  Loaded environment
+ * @param   AdapterInterface  $adapter     Loaded environment
+ * @param   array             $config      Options to initialise environment
+ *
+ * @return  void
+ */
+public function onFlysystemAfterLoadFilesystem(Filesystem $filesystem, AdapterInterface $adapter, $config = null)
 ```
 
 ### MountManager events.
@@ -116,29 +116,29 @@ Events triggered when a filesystem is loaded.
 **onFlysystemBeforeLoadMountManager** Called before a MountManager instance is created.
 
 ```php
-	/**
-	 * Triggered before MountManager has been loaded.
-	 *
-	 * @param   MountManager      $mountManager  Loaded MountManager
-	 * @param   array             $filesystems   Filesystems being loaded
-	 *
-	 * @return  void
-	 */
-	public function onFlysystemBeforeLoadMountManager(MountManager $mountManager, array &$filesystems)
+/**
+ * Triggered before MountManager has been loaded.
+ *
+ * @param   MountManager      $mountManager  Loaded MountManager
+ * @param   array             $filesystems   Filesystems being loaded
+ *
+ * @return  void
+ */
+public function onFlysystemBeforeLoadMountManager(MountManager $mountManager, array &$filesystems)
 ```
 
 **onFlysystemAfterLoadMountManager** Called after a MountManager instance has been created.
 
 ```php
-	/**
-	 * Triggered after MountManager has been loaded.
-	 *
-	 * @param   MountManager      $mountManager  Loaded MountManager
-	 * @param   array             $filesystems   Filesystems already loaded
-	 *
-	 * @return  void
-	 */
-	public function onFlysystemAfterLoadMountManager(MountManager $mountManager, array $filesystems)
+/**
+ * Triggered after MountManager has been loaded.
+ *
+ * @param   MountManager      $mountManager  Loaded MountManager
+ * @param   array             $filesystems   Filesystems already loaded
+ *
+ * @return  void
+ */
+public function onFlysystemAfterLoadMountManager(MountManager $mountManager, array $filesystems)
 ```
 
 ### Global adapters events.
@@ -148,27 +148,27 @@ These events allow to perform common actions for all the adapters with a single 
 **onFlysystemBeforeLoadAdapter** Called before an AdapterInterface instance is created.
 
 ```php
-	/**
-	 * Triggered before adapter has been loaded.
-	 *
-	 * @param   AdapterInterface  $adapter  Adapter being instatiated
-	 *
-	 * @return  void
-	 */
-	public function onFlysystemBeforeLoadAdapter(AdapterInterface $adapter)
+/**
+ * Triggered before adapter has been loaded.
+ *
+ * @param   AdapterInterface  $adapter  Adapter being instatiated
+ *
+ * @return  void
+ */
+public function onFlysystemBeforeLoadAdapter(AdapterInterface $adapter)
 ```
 
 **onFlysystemAfterLoadAdapter** Called after an AdapterInterface instance has been created.
 
 ```php
-	/**
-	 * Triggered after adapter has been loaded.
-	 *
-	 * @param   AdapterInterface  $adapter  Adapter being instatiated
-	 *
-	 * @return  void
-	 */
-	public function onFlysystemAfterLoadAdapter(AdapterInterface $adapter)
+/**
+ * Triggered after adapter has been loaded.
+ *
+ * @param   AdapterInterface  $adapter  Adapter being instatiated
+ *
+ * @return  void
+ */
+public function onFlysystemAfterLoadAdapter(AdapterInterface $adapter)
 ```
 
 ### Specific adapters events
@@ -178,65 +178,217 @@ These events provide more arguments to allow more accurate customisations.
 **onFlysystemBeforeLoadAwsS3Adapter** Called before an AwsS3 adapter instance is created.
 
 ```php
-	/**
-	 * Triggered before adapter has been loaded.
-	 *
-	 * @param   AwsS3     $adapter  Adapter being instatiated
-	 * @param   S3Client  $client   Client to connect to s3
-	 * @param   string    $bucket   Bucket name
-	 * @param   string    $prefix   Optional prefix.
-	 * @param   array     $options  Additional options.
-	 *
-	 * @return  void
-	 */
-	public function onFlysystemBeforeLoadAwsS3Adapter(AwsS3 $adapter, S3Client $client, $bucket, $prefix, array &$options)
+/**
+ * Triggered before adapter has been loaded.
+ *
+ * @param   AwsS3     $adapter  Adapter being instatiated
+ * @param   S3Client  $client   Client to connect to s3
+ * @param   string    $bucket   Bucket name
+ * @param   string    $prefix   Optional prefix.
+ * @param   array     $options  Additional options.
+ *
+ * @return  void
+ */
+public function onFlysystemBeforeLoadAwsS3Adapter(AwsS3 $adapter, S3Client $client, $bucket, $prefix, array &$options)
 ```
 
 **onFlysystemAfterLoadAwsS3Adapter** Called after an AwsS3 adapter instance has been created.
 
 ```php
-	/**
-	 * Triggered after adapter has been loaded.
-	 *
-	 * @param   AwsS3     $adapter  Adapter being instatiated
-	 * @param   S3Client  $client   Client to connect to s3
-	 * @param   string    $bucket   Bucket name
-	 * @param   string    $prefix   Optional prefix.
-	 * @param   array     $options  Additional options.
-	 *
-	 * @return  void
-	 */
-	public function onFlysystemAfterLoadAwsS3Adapter(AwsS3 $adapter, S3Client $client, $bucket, $prefix, array $options)
+/**
+ * Triggered after adapter has been loaded.
+ *
+ * @param   AwsS3     $adapter  Adapter being instatiated
+ * @param   S3Client  $client   Client to connect to s3
+ * @param   string    $bucket   Bucket name
+ * @param   string    $prefix   Optional prefix.
+ * @param   array     $options  Additional options.
+ *
+ * @return  void
+ */
+public function onFlysystemAfterLoadAwsS3Adapter(AwsS3 $adapter, S3Client $client, $bucket, $prefix, array $options)
 ```
 
 **onFlysystemBeforeLoadAzureAdapter** Called before an Azure adapter instance is created.
 
 ```php
-	/**
-	 * Triggered before adapter has been loaded.
-	 *
-	 * @param   Azure   $adapter      Adapter being instatiated
-	 * @param   IBlob   $azureClient  Client to connect.
-	 * @param   string  $container    Name of the container
-	 * @param   string  $prefix       Optional prefix.
-	 *
-	 * @return  void
-	 */
-	public function onFlysystemBeforeLoadAzureAdapter(Azure $adapter, IBlob $azureClient, &$container, &$prefix = null)
+/**
+ * Triggered before adapter has been loaded.
+ *
+ * @param   Azure   $adapter      Adapter being instatiated
+ * @param   IBlob   $azureClient  Client to connect.
+ * @param   string  $container    Name of the container
+ * @param   string  $prefix       Optional prefix.
+ *
+ * @return  void
+ */
+public function onFlysystemBeforeLoadAzureAdapter(Azure $adapter, IBlob $azureClient, &$container, &$prefix = null)
 ```
 
 **onFlysystemAfterLoadAzureAdapter** Called after an Azure adapter instance has been created.
 
 ```php
-	/**
-	 * Triggered after adapter has been loaded.
-	 *
-	 * @param   Azure   $adapter      Adapter being instatiated
-	 * @param   IBlob   $azureClient  Client to connect.
-	 * @param   string  $container    Name of the container
-	 * @param   string  $prefix       Optional prefix.
-	 *
-	 * @return  void
-	 */
-	public function onFlysystemAfterLoadAzureAdapter(Azure $adapter, IBlob $azureClient, $container, $prefix = null)
+/**
+ * Triggered after adapter has been loaded.
+ *
+ * @param   Azure   $adapter      Adapter being instatiated
+ * @param   IBlob   $azureClient  Client to connect.
+ * @param   string  $container    Name of the container
+ * @param   string  $prefix       Optional prefix.
+ *
+ * @return  void
+ */
+public function onFlysystemAfterLoadAzureAdapter(Azure $adapter, IBlob $azureClient, $container, $prefix = null)
+```
+
+**onFlysystemBeforeLoadDropboxAdapter** Called before a Dropbox adapter instance has been created.
+
+```php
+/**
+ * Triggered before adapter has been loaded.
+ *
+ * @param   Dropbox  $adapter  Adapter being instatiated
+ * @param   Client   $client   Client to connect to Dropbox
+ * @param   string   $prefix   Optional prefix.
+ *
+ * @return  void
+ */
+public function onFlysystemBeforeLoadDropboxAdapter(Dropbox $adapter, Client $client, string &$prefix)
+```
+
+**onFlysystemAfterLoadDropboxAdapter** Called after a Dropbox adapter instance has been created.
+
+```php
+/**
+ * Triggered after adapter has been loaded.
+ *
+ * @param   Dropbox  $adapter  Adapter being instatiated
+ * @param   Client   $client   Client to connect to Dropbox
+ * @param   string   $prefix   Optional prefix.
+ *
+ * @return  void
+ */
+public function onFlysystemAfterLoadDropboxAdapter(Dropbox $adapter, Client $client, string $prefix)
+```
+
+**onFlysystemBeforeLoadFtpAdapter** Called before an FTP adapter instance has been created.
+
+```php
+/**
+ * Triggered before adapter has been loaded.
+ *
+ * @param   Ftp    $adapter  Adapter being instatiated
+ * @param   array  $config   Adapter configuration
+ *
+ * @return  void
+ */
+public function onFlysystemBeforeLoadFtpAdapter(Ftp $adapter, array &$config)
+```
+
+**onFlysystemAfterLoadFtpAdapter** Called after an FTP adapter instance has been created.
+
+```php
+/**
+ * Triggered after adapter has been loaded.
+ *
+ * @param   Ftp    $adapter  Adapter being instatiated
+ * @param   array  $config   Adapter configuration
+ *
+ * @return  void
+ */
+public function onFlysystemAfterLoadFtpAdapter(Ftp $adapter, array $config)
+```
+
+**onFlysystemBeforeLoadJoomlaFolderAdapter** Called before an JoomlaFolder adapter instance has been created.
+
+```php
+/**
+ * Triggered before adapter has been loaded.
+ *
+ * @param   JoomlaFolder   $adapter  Adapter being instatiated
+ * @param   string         $path     Path being loaded
+ * @param   string         $config   Configuration for the adapter
+ *
+ * @return  void
+ */
+public function onFlysystemBeforeLoadJoomlaFolderAdapter(JoomlaFolder $adapter, string &$path, array &$config)
+```
+
+**onFlysystemAfterLoadJoomlaFolderAdapter** Called after an JoomlaFolder adapter instance has been created.
+
+```php
+/**
+ * Triggered after adapter has been loaded.
+ *
+ * @param   JoomlaFolder  $adapter  Adapter being instatiated.
+ * @param   string        $path     Path being loaded.
+ * @param   string        $config   Configuration for the adapter.
+ *
+ * @return  void
+ */
+public function onFlysystemAfterLoadJoomlaFolderAdapter(JoomlaFolder $adapter, string $path, array $config)
+```
+
+**onFlysystemBeforeLoadWebDAVAdapter** Called before a WebDAV adapter instance has been created.
+
+```php
+/**
+ * Triggered before adapter has been loaded.
+ *
+ * @param   WebDAV  $adapter          Adapter being instatiated
+ * @param   Client  $client           WebDAV client
+ * @param   string  $prefix           Optional prefix
+ * @param   bool    $useStreamedCopy  Use streamd copy. defaults to true.
+ *
+ * @return  void
+ */
+public function onFlysystemBeforeLoadWebDAVAdapter(WebDAV $adapter, Client $client, &$prefix = null, &$useStreamedCopy = true)
+```
+
+**onFlysystemAfterLoadWebDAVAdapter** Called after a WebDAV adapter instance has been created.
+
+```php
+/**
+ * Triggered after adapter has been loaded.
+ *
+ * @param   WebDAV  $adapter          Adapter being instatiated
+ * @param   Client  $client           WebDAV client
+ * @param   string  $prefix           Optional prefix
+ * @param   bool    $useStreamedCopy  Use streamd copy. defaults to true.
+ *
+ * @return  void
+ */
+public function onFlysystemAfterLoadWebDAVAdapter(WebDAV $adapter, Client $client, $prefix = null, $useStreamedCopy = true)
+```
+
+**onFlysystemBeforeLoadZipFileAdapter** Called after a ZipFile adapter instance has been created.
+
+```php
+/**
+ * Triggered before adapter has been loaded.
+ *
+ * @param   ZipFile     $adapter   Adapter being instatiated
+ * @param   string      $location  Path to the zip file
+ * @param   ZipArchive  $file      Source file.
+ * @param   string      $prefix    Optional prefix
+ *
+ * @return  void
+ */
+public function onFlysystemBeforeLoadZipFileAdapter(ZipFile $adapter, &$location, ZipArchive $file = null, &$prefix = null)
+```
+
+**onFlysystemAfterLoadZipFileAdapter** Called after a ZipFile adapter instance has been created.
+
+```php
+/**
+ * Triggered after adapter has been loaded.
+ *
+ * @param   ZipFile     $adapter   Adapter being instatiated
+ * @param   string      $location  Path to the zip file
+ * @param   ZipArchive  $file      Source file.
+ * @param   string      $prefix    Optional prefix
+ *
+ * @return  void
+ */
+public function onFlysystemAfterLoadZipFileAdapter(ZipFile $adapter, $location, ZipArchive $file = null, $prefix = null)
 ```
