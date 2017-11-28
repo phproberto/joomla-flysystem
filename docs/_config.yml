@@ -1,0 +1,11 @@
+title: joomla-flysystem
+description: Flysystem integration for Joomla!
+show_nav: false
+show_sidebar: true
+show_downloads: true
+theme: phproberto/jekyll-test
+remote_theme: "phproberto/jekyll-test"
+include: 
+  - license.md
+plugins:
+  - jekyll-remote-theme

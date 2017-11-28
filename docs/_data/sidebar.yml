@@ -1,0 +1,24 @@
+- title: Basics
+  links: 
+    - title: What is joomla-flysystem?
+      url: / 
+    - title: Quick start
+      url: /quickstart
+    - title: License
+      url: /license
+- title: Adapters
+  links: 
+    - title: AWS S3 v3
+      url: /adapters/awss3 
+    - title: Azure
+      url: /adapters/azure  
+    - title: Dropbox
+      url: /adapters/dropbox   
+    - title: Ftp
+      url: /adapters/ftp    
+    - title: JoomlaFolder
+      url: /adapters/joomlafolder 
+    - title: WebDAV
+      url: /adapters/webdav 
+    - title: ZipFile
+      url: /adapters/zipfile 
