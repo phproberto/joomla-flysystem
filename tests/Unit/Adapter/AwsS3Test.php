@@ -9,22 +9,23 @@
 
 namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter;
 
+use Aws\S3\S3Client;
 use Joomla\CMS\Factory;
 use League\Flysystem\AdapterInterface;
-use Phproberto\Joomla\Flysystem\Adapter\Ftp;
+use Phproberto\Joomla\Flysystem\Adapter\AwsS3;
 use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
 
 /**
- * Ftp adapter tests.
+ * AwsS3 adapter tests.
  *
  * @since   __DEPLOY_VERSION__
  */
-class FtpTest extends TestWithEvents
+class AwsS3Test extends TestWithEvents
 {
 	/**
 	 * Tested adapter.
 	 *
-	 * @var  Ftp
+	 * @var  AwsS3Adapter
 	 */
 	private $adapter;
 
@@ -34,9 +35,8 @@ class FtpTest extends TestWithEvents
 	 * @var  array
 	 */
 	private $testServerConfig = [
-		'host'     => 'speedtest.tele2.net',
-		'username' => 'anonymous',
-		'password' => 'anonymous'
+		'region' => 'us-west-2',
+		'version' => 'latest'
 	];
 
 	/**
@@ -50,25 +50,13 @@ class FtpTest extends TestWithEvents
 		parent::setUp();
 
 		Factory::$application->registerEvent('onFlysystemBeforeLoadAdapter', [$this, 'onFlysystemBeforeLoadAdapter']);
-		Factory::$application->registerEvent('onFlysystemBeforeLoadFtpAdapter', [$this, 'onFlysystemBeforeLoadFtpAdapter']);
+		Factory::$application->registerEvent('onFlysystemBeforeLoadAwsS3Adapter', [$this, 'onFlysystemBeforeLoadAwsS3Adapter']);
 		Factory::$application->registerEvent('onFlysystemAfterLoadAdapter', [$this, 'onFlysystemAfterLoadAdapter']);
-		Factory::$application->registerEvent('onFlysystemAfterLoadFtpAdapter', [$this, 'onFlysystemAfterLoadFtpAdapter']);
+		Factory::$application->registerEvent('onFlysystemAfterLoadAwsS3Adapter', [$this, 'onFlysystemAfterLoadAwsS3Adapter']);
 
-		$this->adapter = new Ftp($this->testServerConfig);
-	}
 
-	/**
-	 * @test
-	 *
-	 * @return void
-	 */
-	public function constructorSetsConfig()
-	{
-		$reflection = new \ReflectionClass($this->adapter);
-		$hostPrefixProperty = $reflection->getProperty('host');
-		$hostPrefixProperty->setAccessible(true);
-
-		$this->assertSame($this->testServerConfig['host'], $hostPrefixProperty->getValue($this->adapter));
+		$client = S3Client::factory($this->testServerConfig);
+		$this->adapter = new AwsS3($client, 'your-bucket-name');
 	}
 
 	/**
@@ -80,36 +68,19 @@ class FtpTest extends TestWithEvents
 	{
 		$expectedTriggeredEvents = [
 			'onFlysystemBeforeLoadAdapter',
-			'onFlysystemBeforeLoadFtpAdapter',
+			'onFlysystemBeforeLoadAwsS3Adapter',
 			'onFlysystemAfterLoadAdapter',
-			'onFlysystemAfterLoadFtpAdapter'
+			'onFlysystemAfterLoadAwsS3Adapter'
 		];
 
 		$this->assertSame($expectedTriggeredEvents, array_keys($this->calledEvents));
 
 		$this->assertTrue($this->adapter->param('onFlysystemBeforeLoadAdapter'));
-		$this->assertTrue($this->adapter->param('onFlysystemBeforeLoadFtpAdapter'));
+		$this->assertTrue($this->adapter->param('onFlysystemBeforeLoadAwsS3Adapter'));
 		$this->assertTrue($this->adapter->param('onFlysystemAfterLoadAdapter'));
-		$this->assertTrue($this->adapter->param('onFlysystemAfterLoadFtpAdapter'));
+		$this->assertTrue($this->adapter->param('onFlysystemAfterLoadAwsS3Adapter'));
 
-		$this->assertSame('onFlysystemBeforeLoadFtpAdapter', $this->adapter->param('modifiedConfig'));
-	}
-
-	/**
-	 * @test
-	 *
-	 * @return void
-	 */
-	public function canReadFile()
-	{
-		$expected = [
-			'type'       => 'file',
-			'path'       => '1KB.zip',
-			'visibility' => 'public',
-			'size'       => 1024
-		];
-
-		$this->assertSame($expected, $this->adapter->has('1KB.zip'));
+		$this->assertSame('onFlysystemBeforeLoadAwsS3Adapter', $this->adapter->param('modifiedConfig'));
 	}
 
 	/**
@@ -129,16 +100,19 @@ class FtpTest extends TestWithEvents
 	/**
 	 * Triggered before adapter has been loaded.
 	 *
-	 * @param   Ftp    $adapter  Adapter being instatiated
-	 * @param   array  $config   Adapter configuration
+	 * @param   AwsS3     $adapter  Adapter being instatiated
+	 * @param   S3Client  $client   Client to connect to s3
+	 * @param   string    $bucket   Bucket name
+	 * @param   string    $prefix   Optional prefix.
+	 * @param   array     $options  Additional options.
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemBeforeLoadFtpAdapter(Ftp $adapter, array &$config)
+	public function onFlysystemBeforeLoadAwsS3Adapter(AwsS3 $adapter, S3Client $client, $bucket, $prefix, array &$options)
 	{
 		$this->calledEvents[__FUNCTION__] = func_get_args();
 
-		$config['modifiedConfig'] = __FUNCTION__;
+		$options['modifiedConfig'] = __FUNCTION__;
 		$adapter->setParam(__FUNCTION__, true);
 	}
 
@@ -159,12 +133,15 @@ class FtpTest extends TestWithEvents
 	/**
 	 * Triggered after adapter has been loaded.
 	 *
-	 * @param   Ftp    $adapter  Adapter being instatiated
-	 * @param   array  $config   Adapter configuration
+	 * @param   AwsS3     $adapter  Adapter being instatiated
+	 * @param   S3Client  $client   Client to connect to s3
+	 * @param   string    $bucket   Bucket name
+	 * @param   string    $prefix   Optional prefix.
+	 * @param   array     $options  Additional options.
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemAfterLoadFtpAdapter(Ftp $adapter, array $config)
+	public function onFlysystemAfterLoadAwsS3Adapter(AwsS3 $adapter, S3Client $client, $bucket, $prefix, array $options)
 	{
 		$this->calledEvents[__FUNCTION__] = func_get_args();
 
