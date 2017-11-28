@@ -13,7 +13,7 @@ Wrapper for [Flysystem Adapter for AWS SDK V3](https://github.com/thephpleague/f
 
 ### 1. Usage <a id="usage"></a>
 
-To use the adapter programmatically you can use: 
+To use the adapter programmatically you can use:  
 
 
 ```php
