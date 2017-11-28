@@ -1,4 +1,4 @@
-#### Global adapters events. <a id="global-adapters-events"></a>
+### Global events. <a id="global-adapters-events"></a>
 
 These events allow to perform common actions for all the adapters with a single entry point.
 
