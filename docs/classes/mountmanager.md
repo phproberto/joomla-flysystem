@@ -1,6 +1,6 @@
 ## MountManager class
 
-This class extends [Flysystem MountManager](https://github.com/thephpleague/flysystem/blob/master/src/MountManager.php) to trigger events that joomla plugin can use to load custom file systems.  
+This class extends [Flysystem MountManager](https://github.com/thephpleague/flysystem/blob/master/src/MountManager.php) to trigger events that joomla plugins can use to load custom file systems and any other cool stuff you can imagine.  
 
 1. [Usage](#usage)
 2. [Events](#events)
@@ -35,8 +35,6 @@ if ($manager->has(com_sample-site://models/books.php))
 ```
 
 ### 2. Events <a id="events"></a>
-
-This class provides this events to be able to load custom filesystems through plugins and other cool stuff you can imagine:  
 
 **onFlysystemBeforeLoadMountManager** Called before a MountManager instance is created.<a id="onFlysystemBeforeLoadMountManager"></a>
 
