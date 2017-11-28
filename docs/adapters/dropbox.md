@@ -1,4 +1,4 @@
-## Dropbox
+## Dropbox Adapter
 
 Wrapper for [Spatie Dropbox v2 adapter](https://github.com/spatie/flysystem-dropbox) with Joomla events support. 
 

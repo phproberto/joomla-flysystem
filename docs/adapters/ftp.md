@@ -1,4 +1,6 @@
-## Ftp
+## Ftp Adapter
+
+Wrapper for [Flysystem FTP Adapter](https://github.com/thephpleague/flysystem/blob/master/src/Adapter/Ftp.php) with Joomla events support.
 
 1. [Usage](#usage)
 2. [Events](#events)
