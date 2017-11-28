@@ -6,6 +6,14 @@
       url: /quickstart
     - title: License
       url: /license
+- title: Classes
+  links: 
+    - title: FileServer
+      url: /classes/fileserver  
+    - title: Filesystem
+      url: /classes/filesystem  
+    - title: MountManager
+      url: /classes/mountmanager 
 - title: Adapters
   links: 
     - title: AWS S3 v3
