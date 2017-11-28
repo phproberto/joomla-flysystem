@@ -53,7 +53,7 @@ trait HasParameters
 	 *
 	 * @return  self
 	 */
-	protected function initParams() : AdapterInterface
+	public function initParams() : AdapterInterface
 	{
 		$this->params = new Registry($this->defaults());
 
@@ -80,6 +80,11 @@ trait HasParameters
 	 */
 	public function params() : Registry
 	{
+		if (!$this->hasParams())
+		{
+			$this->initParams();
+		}
+
 		return $this->params;
 	}
 
@@ -113,8 +118,7 @@ trait HasParameters
 	public function setParams(array $params) : AdapterInterface
 	{
 		$this->initParams();
-
-		$this->params = new Registry($params);
+		$this->updateParams($params);
 
 		return $this;
 	}
