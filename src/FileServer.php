@@ -100,7 +100,7 @@ final class FileServer
 	 *
 	 * @return  array
 	 */
-	public function filterPrefix(array $arguments)
+	private function filterPrefix(array $arguments)
 	{
 		if (empty($arguments))
 		{

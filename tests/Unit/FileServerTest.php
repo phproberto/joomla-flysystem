@@ -11,6 +11,7 @@ namespace Phproberto\Joomla\Flysystem\Tests\Unit;
 
 use Joomla\CMS\Factory;
 use Phproberto\Joomla\Flysystem\FileServer;
+use InvalidArgumentException;
 
 /**
  * FileServer tests.
@@ -137,5 +138,41 @@ class FileServerTest extends \TestCaseDatabase
 		$newInstance = FileServer::instance();
 
 		$this->assertSame('foo', $managerProperty->getValue($newInstance));
+	}
+
+	/**
+	 * @test
+	 *
+	 * @return void
+	 *
+	 * @expectedException  InvalidArgumentException
+	 */
+	public function throwsExceptionOnMissingPath()
+	{
+		$this->fileServer->has();
+	}
+
+	/**
+	 * @test
+	 *
+	 * @return void
+	 *
+	 * @expectedException  InvalidArgumentException
+	 */
+	public function throwsExceptionOnNonStringPath()
+	{
+		$this->fileServer->has(new \stdClass);
+	}
+
+	/**
+	 * @test
+	 *
+	 * @return void
+	 *
+	 * @expectedException  InvalidArgumentException
+	 */
+	public function throwsExceptionOnWrongPathString()
+	{
+		$this->fileServer->has('wrong-path');
 	}
 }
