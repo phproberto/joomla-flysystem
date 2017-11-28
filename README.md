@@ -19,7 +19,9 @@ This is a way to provide an extendable system to easily access from Joomla to fi
 
 ### Supported adapters.
 
-All the [official adapters](https://github.com/thephpleague/flysystem#adapters) are supported but system is shipped with specific wrappers for most commonly used adapters:
+All the [official adapters](https://github.com/thephpleague/flysystem#adapters) are supported but this library provides specific wrappers for most commonly used adapters. Using this specific adapters allows joomla plugins to connect when an adapter or filesystem is loaded to allow customisations.
+
+Available wrappers:
 
 * [AWS S3 v3](./src/Adapter/AwsS3.php). Load files stored in AWS S3.
 * [Azure](./src/Adapter/Azure.php). Load files stored in Azure.
@@ -28,8 +30,6 @@ All the [official adapters](https://github.com/thephpleague/flysystem#adapters) 
 * [JoomlaFolder](./src/Adapter/JoomlaFolder.php). Load files from the joomla site.
 * [WebDAV](./src/Adapter/WebDAB.php). Load WebDAV files.
 * [ZipFile](./src/Adapter/ZipFile.php). Load & store files from zip files. Requires `php-zip` extension installed.
-
-Wrappers allow that plugins connect when an adapter or filesystem is loaded to allow customisations.
 
 ### How to use it?
 
@@ -75,4 +75,168 @@ echo $files->read('site://htaccess.txt');
 // Temp file. Stored in /tmp/index.html
 echo $files->read('tmp://index.html');
 
+```
+
+### Filesystem events.
+
+Events triggered when a filesystem is loaded.
+
+**onFlysystemBeforeLoadFilesystem** Called before an filesystem instance is created.
+
+```php
+	/**
+	 * Triggered before filesystem has been loaded.
+	 *
+	 * @param   Filesystem        $filesystem  Loaded environment
+	 * @param   AdapterInterface  $adapter     Loaded environment
+	 * @param   array             $config      Options to initialise environment
+	 *
+	 * @return  void
+	 */
+	public function onFlysystemBeforeLoadFilesystem(Filesystem $filesystem, AdapterInterface &$adapter, &$config = null)
+```
+
+**onFlysystemAfterLoadFilesystem** Called after an filesystem instance has been created.
+
+```php
+	/**
+	 * Triggered after filesystem has been loaded.
+	 *
+	 * @param   Filesystem        $filesystem  Loaded environment
+	 * @param   AdapterInterface  $adapter     Loaded environment
+	 * @param   array             $config      Options to initialise environment
+	 *
+	 * @return  void
+	 */
+	public function onFlysystemAfterLoadFilesystem(Filesystem $filesystem, AdapterInterface $adapter, $config = null)
+```
+
+### MountManager events.
+
+**onFlysystemBeforeLoadMountManager** Called before a MountManager instance is created.
+
+```php
+	/**
+	 * Triggered before MountManager has been loaded.
+	 *
+	 * @param   MountManager      $mountManager  Loaded MountManager
+	 * @param   array             $filesystems   Filesystems being loaded
+	 *
+	 * @return  void
+	 */
+	public function onFlysystemBeforeLoadMountManager(MountManager $mountManager, array &$filesystems)
+```
+
+**onFlysystemAfterLoadMountManager** Called after a MountManager instance has been created.
+
+```php
+	/**
+	 * Triggered after MountManager has been loaded.
+	 *
+	 * @param   MountManager      $mountManager  Loaded MountManager
+	 * @param   array             $filesystems   Filesystems already loaded
+	 *
+	 * @return  void
+	 */
+	public function onFlysystemAfterLoadMountManager(MountManager $mountManager, array $filesystems)
+```
+
+### Global adapters events.
+
+These events allow to perform common actions for all the adapters with a single entry point.
+
+**onFlysystemBeforeLoadAdapter** Called before an AdapterInterface instance is created.
+
+```php
+	/**
+	 * Triggered before adapter has been loaded.
+	 *
+	 * @param   AdapterInterface  $adapter  Adapter being instatiated
+	 *
+	 * @return  void
+	 */
+	public function onFlysystemBeforeLoadAdapter(AdapterInterface $adapter)
+```
+
+**onFlysystemAfterLoadAdapter** Called after an AdapterInterface instance has been created.
+
+```php
+	/**
+	 * Triggered after adapter has been loaded.
+	 *
+	 * @param   AdapterInterface  $adapter  Adapter being instatiated
+	 *
+	 * @return  void
+	 */
+	public function onFlysystemAfterLoadAdapter(AdapterInterface $adapter)
+```
+
+### Specific adapters events
+
+These events provide more arguments to allow more accurate customisations.
+
+**onFlysystemBeforeLoadAwsS3Adapter** Called before an AwsS3 adapter instance is created.
+
+```php
+	/**
+	 * Triggered before adapter has been loaded.
+	 *
+	 * @param   AwsS3     $adapter  Adapter being instatiated
+	 * @param   S3Client  $client   Client to connect to s3
+	 * @param   string    $bucket   Bucket name
+	 * @param   string    $prefix   Optional prefix.
+	 * @param   array     $options  Additional options.
+	 *
+	 * @return  void
+	 */
+	public function onFlysystemBeforeLoadAwsS3Adapter(AwsS3 $adapter, S3Client $client, $bucket, $prefix, array &$options)
+```
+
+**onFlysystemAfterLoadAwsS3Adapter** Called after an AwsS3 adapter instance has been created.
+
+```php
+	/**
+	 * Triggered after adapter has been loaded.
+	 *
+	 * @param   AwsS3     $adapter  Adapter being instatiated
+	 * @param   S3Client  $client   Client to connect to s3
+	 * @param   string    $bucket   Bucket name
+	 * @param   string    $prefix   Optional prefix.
+	 * @param   array     $options  Additional options.
+	 *
+	 * @return  void
+	 */
+	public function onFlysystemAfterLoadAwsS3Adapter(AwsS3 $adapter, S3Client $client, $bucket, $prefix, array $options)
+```
+
+**onFlysystemBeforeLoadAzureAdapter** Called before an Azure adapter instance is created.
+
+```php
+	/**
+	 * Triggered before adapter has been loaded.
+	 *
+	 * @param   Azure   $adapter      Adapter being instatiated
+	 * @param   IBlob   $azureClient  Client to connect.
+	 * @param   string  $container    Name of the container
+	 * @param   string  $prefix       Optional prefix.
+	 *
+	 * @return  void
+	 */
+	public function onFlysystemBeforeLoadAzureAdapter(Azure $adapter, IBlob $azureClient, &$container, &$prefix = null)
+```
+
+**onFlysystemAfterLoadAzureAdapter** Called after an Azure adapter instance has been created.
+
+```php
+	/**
+	 * Triggered after adapter has been loaded.
+	 *
+	 * @param   Azure   $adapter      Adapter being instatiated
+	 * @param   IBlob   $azureClient  Client to connect.
+	 * @param   string  $container    Name of the container
+	 * @param   string  $prefix       Optional prefix.
+	 *
+	 * @return  void
+	 */
+	public function onFlysystemAfterLoadAzureAdapter(Azure $adapter, IBlob $azureClient, $container, $prefix = null)
 ```
