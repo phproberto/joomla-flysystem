@@ -1,6 +1,6 @@
 ## Dropbox
 
-Wrapper for [Flysystem Adapter for AWS SDK V3](https://github.com/thephpleague/flysystem-aws-s3-v3) with Joomla events support. 
+Wrapper for [Spatie Dropbox v2 adapter](https://github.com/spatie/flysystem-dropbox) with Joomla events support. 
 
 1. [Usage](#usage)
 2. [Events](#events)
