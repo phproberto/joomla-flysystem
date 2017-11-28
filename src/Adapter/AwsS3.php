@@ -36,7 +36,7 @@ class AwsS3 extends AwsS3Adapter
 	public function __construct(S3Client $client, $bucket, $prefix = '', array $options = [])
 	{
 		$this->trigger('onFlysystemBeforeLoadAdapter');
-		$this->trigger('onFlysystemBeforeLoadAwsS3Adapter', [$client, $bucket, $prefix, &$options]);
+		$this->trigger('onFlysystemBeforeLoadAwsS3Adapter', [$client, &$bucket, &$prefix, &$options]);
 
 		$this->updateParams($options);
 
