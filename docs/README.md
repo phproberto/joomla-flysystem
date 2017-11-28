@@ -4,7 +4,7 @@ This is a library to integrate a cool filesystem abstraction named [Flysystem](h
 
 ### Flysystem benefits 
 
-This information is extracted from [Flysystem docs](http://flysystem.thephpleague.com/)
+This information is extracted from [Flysystem docs](http://flysystem.thephpleague.com/):
 
 * Have a generic API for handling common tasks across multiple file storage engines.
 * Have consistent output which you can rely on.
