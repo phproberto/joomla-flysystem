@@ -18,6 +18,8 @@ This is a way to provide an extendable system to easily access, from Joomla, fil
 
 This repository does not contain a joomla installable package. It's the main source of the code used by a library that I will distribute as soon as a stable version is released.
 
+As soon as a packagist library is available I will update this to add information to use it through composer.  
+
 ### Documentation. <a id="documentation"></a>
 
 I've created a nice [Documentation](https://phproberto.github.io/joomla-flysystem) with a lot of information to understand what is this and how to use it.
