@@ -4,6 +4,8 @@
       url: / 
     - title: Quick start
       url: /quickstart
+    - title: Quality Assurance
+      url: /qa
     - title: License
       url: /license
 - title: Classes

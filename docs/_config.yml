@@ -6,7 +6,8 @@ show_downloads: true
 theme: phproberto/jekyll-test
 remote_theme: "phproberto/jekyll-test"
 include: 
-  - quickstart.md
   - license.md
+  - qa.md 
+  - quickstart.md
 plugins:
   - jekyll-remote-theme
