@@ -9,19 +9,16 @@
 
 namespace Phproberto\Joomla\Flysystem\Adapter;
 
-use League\Flysystem\Util;
-use Joomla\Registry\Registry;
-use League\Flysystem\Adapter\Local;
 use Phproberto\Joomla\Flysystem\Traits\HasEvents;
+use Phproberto\Joomla\Flysystem\Adapter\BlockedLocal;
 use Phproberto\Joomla\Flysystem\Adapter\Traits\HasParameters;
-use LogicException;
 
 /**
  * Joomla local file adapter.
  *
  * @since   __DEPLOY_VERSION__
  */
-final class JoomlaFolder extends Local
+final class JoomlaFolder extends BlockedLocal
 {
 	use HasEvents, HasParameters;
 
@@ -51,22 +48,6 @@ final class JoomlaFolder extends Local
 
 		$this->trigger('onFlysystemAfterLoadAdapter');
 		$this->trigger('onFlysystemAfterLoadJoomlaFolderAdapter', [$path, $config]);
-	}
-
-	/**
-	 * Prefix a path. Overriden to ensure that access outside root folder is forbidden.
-	 *
-	 * @param   string  $path  Path to apply prefix.
-	 *
-	 * @return  string  Prefixed path
-	 *
-	 * @throws  LogicException
-	 */
-	public function applyPathPrefix($path)
-	{
-		$path = Util::normalizeRelativePath($path);
-
-		return parent::applyPathPrefix($path);
 	}
 
 	/**
