@@ -21,6 +21,13 @@ use Phproberto\Joomla\Flysystem\MountManager;
 final class FileServer
 {
 	/**
+	 * Prefix of the JoomlaFolder adapter.
+	 *
+	 * @const
+	 */
+	const JOOMLA_ADAPTER_PREFIX = 'joomla';
+
+	/**
 	 * Renderer instance.
 	 *
 	 * @var  $this
@@ -142,15 +149,15 @@ final class FileServer
 	private function redirectedPrefixes() : array
 	{
 		return [
-			'admin'    => ['joomla', 'administrator'],
-			'image'    => ['joomla', 'images'],
-			'layout'   => ['joomla', 'layouts'],
-			'library'  => ['joomla', 'libraries'],
-			'media'    => ['joomla', 'media'],
-			'module'   => ['joomla', 'modules'],
-			'plugin'   => ['joomla', 'plugins'],
-			'site'     => ['joomla', ''],
-			'template' => ['joomla', 'templates']
+			'admin'    => [self::JOOMLA_ADAPTER_PREFIX, 'administrator'],
+			'image'    => [self::JOOMLA_ADAPTER_PREFIX, 'images'],
+			'layout'   => [self::JOOMLA_ADAPTER_PREFIX, 'layouts'],
+			'library'  => [self::JOOMLA_ADAPTER_PREFIX, 'libraries'],
+			'media'    => [self::JOOMLA_ADAPTER_PREFIX, 'media'],
+			'module'   => [self::JOOMLA_ADAPTER_PREFIX, 'modules'],
+			'plugin'   => [self::JOOMLA_ADAPTER_PREFIX, 'plugins'],
+			'site'     => [self::JOOMLA_ADAPTER_PREFIX, ''],
+			'template' => [self::JOOMLA_ADAPTER_PREFIX, 'templates']
 		];
 	}
 
