@@ -14,6 +14,7 @@ use League\Flysystem\AdapterInterface;
 use Joomla\CMS\Application\CMSApplication;
 use Phproberto\Joomla\Flysystem\Adapter\JoomlaFolder;
 use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
+use LogicException;
 
 /**
  * JoomlaFolder adapter tests.
@@ -107,6 +108,20 @@ class JoomlaFolderTest extends TestWithEvents
 	}
 
 	/**
+	 * @test
+	 *
+	 * @dataProvider insecurePaths
+	 *
+	 * @return void
+	 *
+	 * @expectedException  LogicException
+	 */
+	public function throwsExceptonOnInsecurePaths($path)
+	{
+		$this->adapter->has($path);
+	}
+
+	/**
 	 * Triggered before adapter has been loaded.
 	 *
 	 * @param   AdapterInterface  $adapter  Adapter being instatiated
@@ -166,4 +181,20 @@ class JoomlaFolderTest extends TestWithEvents
 
 		$adapter->setParam('onFlysystemAfterLoadJoomlaFolderAdapter', true);
 	}
+
+	/**
+	 * List of insecure paths to prevent unauthorised access.
+	 *
+	 * @return  array
+	 */
+	public function insecurePaths()
+	{
+		return [
+			['../index.php'],
+			['./../index.php'],
+			['./jui/../../index.php'],
+			['..']
+		];
+	}
+
 }
