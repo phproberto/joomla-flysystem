@@ -1,5 +1,7 @@
 # Flysystem integration for Joomla!
 
+[![Build Status](https://travis-ci.org/phproberto/joomla-flysystem.svg?branch=master)](https://travis-ci.org/phproberto/joomla-flysystem)
+
 > Integrate [Flysystem](http://flysystem.thephpleague.com/) with Joomla!
 
 NOTE: This is a work in progress shared to get feedback.
