@@ -11,5 +11,5 @@ composer.lock
 # Tests
 /clover.xml
 coverage/
-phpunit.*xml
-!phpuni.dist.xml
+/phpunit.*xml
+!/phpunit.dist.xml
