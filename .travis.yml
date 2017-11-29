@@ -1,0 +1,39 @@
+sudo: required
+
+language: php
+
+addons:
+  sonarcloud:
+    organization: "phproberto-github"
+    token:
+      secure: "$SONAR_TOKEN"
+    branches:
+      - develop
+      - master
+      
+jdk:
+  - oraclejdk8
+
+cache:
+  directories:
+    - ./build/node_modules
+    - $HOME/.composer/cache/files
+    - $HOME/.sonar/cache
+
+php:
+  - 7.0
+  - 7.1
+  - 7.2
+
+branches:
+  only:
+  - master
+  - develop
+
+before_script:
+  - ./ci/setup.sh
+
+script:
+  - ./ci/test.sh
+  - sonar-scanner
+  
