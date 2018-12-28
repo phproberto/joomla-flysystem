@@ -34,5 +34,15 @@
     "joomla/coding-standards": "~2.0@alpha",
     "squizlabs/php_codesniffer": "~2.8",
     "joomla/registry": "^1.4.5"
+  },
+  "scripts": {
+    "clean": "cd ./build && gulp clean",
+    "copy" : "cd ./build && gulp copy",
+    "cs" : "./vendor/bin/phpcs",
+    "dev": "cd ./build && gulp",
+    "release" : "cd ./build && gulp release",
+    "setup" : "cd ./build && npm install && cp gulp-config.dist.json gulp-config.json",
+    "test" : "./vendor/bin/phpunit",
+    "watch" : "cd ./build && gulp watch"
   }
 }
