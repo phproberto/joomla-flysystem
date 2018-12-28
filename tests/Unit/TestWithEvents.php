@@ -51,7 +51,7 @@ abstract class TestWithEvents extends \TestCaseDatabase
 		$this->dispatcher      = new \JEventDispatcher;
 		\TestReflection::setValue($this->dispatcher, 'instance', $this->dispatcher);
 
-		$app = $this->getMockForAbstractClass(CMSApplication::class);
+		$app = $this->getMockForAbstractClass(CMSApplication::class, [], '', false);
 		$app->loadDispatcher($this->dispatcher);
 
 		Factory::$application = $app;
