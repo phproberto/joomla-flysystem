@@ -96,7 +96,7 @@ class FileServerTest extends \TestCaseDatabase
 		$this->assertTrue($this->fileServer->has('admin://manifests/libraries/joomla.xml'));
 		$this->assertTrue($this->fileServer->has('image://joomla_black.png'));
 		$this->assertTrue($this->fileServer->has('layout://joomla/system/message.php'));
-		$this->assertTrue($this->fileServer->has('library://joomla/filesystem/file.php'));
+		$this->assertTrue($this->fileServer->has('library://joomla/facebook/post.php'));
 		$this->assertTrue($this->fileServer->has('media://jui/css/bootstrap.css'));
 		$this->assertTrue($this->fileServer->has('module://mod_menu/mod_menu.xml'));
 		$this->assertTrue($this->fileServer->has('plugin://content/vote/vote.xml'));
