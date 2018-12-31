@@ -4,7 +4,7 @@ var config    = require('./gulp-config.json');
 var del       = require('del');
 
 var src = '../src';
-var wwwPath = config.wwwDir + '/libraries/flysystem/src';
+var wwwPath = config.wwwDir + '/libraries/flysystem/vendor/phproberto/joomla-flysystem';
 
 // Clean
 gulp.task('clean', function() {
