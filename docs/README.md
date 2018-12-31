@@ -15,7 +15,7 @@ This information is extracted from [Flysystem docs](http://flysystem.thephpleagu
 * Make it easy to test your filesystem interactions.
 * Support streams for big file handling
 
-### Joomla-Twig features
+### joomla-flysystem features
 
 * Fully compatible with Flysystem.
 * Provides wrappers for Flysystem classes to trigger events that joomla plugins can use to customise interaction. 
