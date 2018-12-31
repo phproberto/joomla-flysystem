@@ -7,7 +7,7 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit;
+namespace Phproberto\Joomla\Flysystem\Tests;
 
 use Joomla\CMS\Factory;
 use Phproberto\Joomla\Flysystem\FileServer;

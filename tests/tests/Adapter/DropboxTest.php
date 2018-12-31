@@ -7,13 +7,13 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter;
+namespace Phproberto\Joomla\Flysystem\Tests\Adapter;
 
 use Joomla\CMS\Factory;
 use Spatie\Dropbox\Client;
 use League\Flysystem\AdapterInterface;
 use Phproberto\Joomla\Flysystem\Adapter\Dropbox;
-use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
+use Phproberto\Joomla\Flysystem\Tests\TestWithEvents;
 
 /**
  * Dropbox adapter tests.

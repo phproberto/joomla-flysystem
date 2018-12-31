@@ -7,12 +7,12 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter;
+namespace Phproberto\Joomla\Flysystem\Tests\Adapter;
 
 use Joomla\CMS\Factory;
 use League\Flysystem\AdapterInterface;
 use Phproberto\Joomla\Flysystem\Adapter\Ftp;
-use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
+use Phproberto\Joomla\Flysystem\Tests\TestWithEvents;
 
 /**
  * Ftp adapter tests.

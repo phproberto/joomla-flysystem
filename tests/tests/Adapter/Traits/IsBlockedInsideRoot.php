@@ -7,7 +7,7 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter\Traits;
+namespace Phproberto\Joomla\Flysystem\Tests\Adapter\Traits;
 
 defined('_JEXEC') || die;
 

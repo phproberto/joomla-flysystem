@@ -7,13 +7,13 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter;
+namespace Phproberto\Joomla\Flysystem\Tests\Adapter;
 
 use Aws\S3\S3Client;
 use Joomla\CMS\Factory;
 use League\Flysystem\AdapterInterface;
 use Phproberto\Joomla\Flysystem\Adapter\AwsS3;
-use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
+use Phproberto\Joomla\Flysystem\Tests\TestWithEvents;
 
 /**
  * AwsS3 adapter tests.

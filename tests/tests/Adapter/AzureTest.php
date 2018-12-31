@@ -7,14 +7,14 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter;
+namespace Phproberto\Joomla\Flysystem\Tests\Adapter;
 
 use Joomla\CMS\Factory;
 use League\Flysystem\AdapterInterface;
 use Phproberto\Joomla\Flysystem\Adapter\Azure;
 use MicrosoftAzure\Storage\Blob\Internal\IBlob;
 use MicrosoftAzure\Storage\Common\ServicesBuilder;
-use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
+use Phproberto\Joomla\Flysystem\Tests\TestWithEvents;
 
 /**
  * Azure tests.

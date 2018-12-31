@@ -7,13 +7,13 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit;
+namespace Phproberto\Joomla\Flysystem\Tests;
 
 use Joomla\CMS\Factory;
 use League\Flysystem\Adapter\Local;
 use Phproberto\Joomla\Flysystem\Filesystem;
 use Phproberto\Joomla\Flysystem\MountManager;
-use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
+use Phproberto\Joomla\Flysystem\Tests\TestWithEvents;
 
 /**
  * MountManager tests.

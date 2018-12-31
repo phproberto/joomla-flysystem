@@ -26,7 +26,7 @@
   },
   "autoload-dev": {
       "psr-4": {
-          "Phproberto\\Joomla\\Flysystem\\Tests\\": "tests/"
+          "Phproberto\\Joomla\\Flysystem\\Tests\\": "tests/tests/"
       }
   },
   "require-dev": {

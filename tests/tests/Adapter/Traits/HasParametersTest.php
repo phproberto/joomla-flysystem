@@ -7,11 +7,11 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter\Traits;
+namespace Phproberto\Joomla\Flysystem\Tests\Adapter\Traits;
 
 use ReflectionClass;
 use Joomla\Registry\Registry;
-use Phproberto\Joomla\Flysystem\Tests\Unit\Adapter\Traits\Stubs\AdapterWithParameters;
+use Phproberto\Joomla\Flysystem\Tests\Adapter\Traits\Stubs\AdapterWithParameters;
 
 /**
  * HasParameters tests.

@@ -7,15 +7,15 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter;
+namespace Phproberto\Joomla\Flysystem\Tests\Adapter;
 
 use LogicException;
 use Joomla\CMS\Factory;
 use League\Flysystem\AdapterInterface;
 use Joomla\CMS\Application\CMSApplication;
 use Phproberto\Joomla\Flysystem\Adapter\JoomlaFolder;
-use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
-use Phproberto\Joomla\Flysystem\Tests\Unit\Adapter\Traits\IsBlockedInsideRoot;
+use Phproberto\Joomla\Flysystem\Tests\TestWithEvents;
+use Phproberto\Joomla\Flysystem\Tests\Adapter\Traits\IsBlockedInsideRoot;
 
 /**
  * JoomlaFolder adapter tests.

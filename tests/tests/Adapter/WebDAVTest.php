@@ -7,27 +7,36 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter;
+namespace Phproberto\Joomla\Flysystem\Tests\Adapter;
 
 use Joomla\CMS\Factory;
 use League\Flysystem\AdapterInterface;
-use Phproberto\Joomla\Flysystem\Adapter\ZipFile;
-use Phproberto\Joomla\Flysystem\Tests\Unit\TestWithEvents;
-use ZipArchive;
+use Phproberto\Joomla\Flysystem\Adapter\WebDAV;
+use Phproberto\Joomla\Flysystem\Tests\TestWithEvents;
+use Sabre\DAV\Client;
 
 /**
- * ZipFile adapter tests.
+ * WebDAV adapter tests.
  *
  * @since   __DEPLOY_VERSION__
  */
-class ZipFileTest extends TestWithEvents
+class WebDAVTest extends TestWithEvents
 {
 	/**
 	 * Tested adapter.
 	 *
-	 * @var  ZipFile
+	 * @var  WebDAV
 	 */
 	private $adapter;
+
+	/**
+	 * Test server configuration.
+	 *
+	 * @var  array
+	 */
+	private $testServerConfig = [
+		'baseUri'     => 'http://localhost'
+	];
 
 	/**
 	 * Sets up the fixture, for example, opens a network connection.
@@ -40,11 +49,11 @@ class ZipFileTest extends TestWithEvents
 		parent::setUp();
 
 		Factory::$application->registerEvent('onFlysystemBeforeLoadAdapter', [$this, 'onFlysystemBeforeLoadAdapter']);
-		Factory::$application->registerEvent('onFlysystemBeforeLoadZipFileAdapter', [$this, 'onFlysystemBeforeLoadZipFileAdapter']);
+		Factory::$application->registerEvent('onFlysystemBeforeLoadWebDAVAdapter', [$this, 'onFlysystemBeforeLoadWebDAVAdapter']);
 		Factory::$application->registerEvent('onFlysystemAfterLoadAdapter', [$this, 'onFlysystemAfterLoadAdapter']);
-		Factory::$application->registerEvent('onFlysystemAfterLoadZipFileAdapter', [$this, 'onFlysystemAfterLoadZipFileAdapter']);
+		Factory::$application->registerEvent('onFlysystemAfterLoadWebDAVAdapter', [$this, 'onFlysystemAfterLoadWebDAVAdapter']);
 
-		$this->adapter = new ZipFile(JPATH_SITE . '/test.zip');
+		$this->adapter = new WebDAV(new Client($this->testServerConfig));
 	}
 
 	/**
@@ -56,9 +65,9 @@ class ZipFileTest extends TestWithEvents
 	{
 		$expectedTriggeredEvents = [
 			'onFlysystemBeforeLoadAdapter',
-			'onFlysystemBeforeLoadZipFileAdapter',
+			'onFlysystemBeforeLoadWebDAVAdapter',
 			'onFlysystemAfterLoadAdapter',
-			'onFlysystemAfterLoadZipFileAdapter'
+			'onFlysystemAfterLoadWebDAVAdapter'
 		];
 
 		$this->assertSame($expectedTriggeredEvents, array_keys($this->calledEvents));
@@ -70,10 +79,12 @@ class ZipFileTest extends TestWithEvents
 		// Plugin could modify prefix
 		$this->assertSame('modifiedPrefix/', $pathPrefixProperty->getValue($this->adapter));
 
-		$archive = (array) $this->adapter->getArchive();
+		$reflection = new \ReflectionClass($this->adapter);
+		$useStreamedCopyProperty = $reflection->getProperty('useStreamedCopy');
+		$useStreamedCopyProperty->setAccessible(true);
 
-		// Plugin could modify location
-		$this->assertSame('test.test.zip', basename($archive['filename']));
+		// Plugin could modify $useStreamedCopyProperty
+		$this->assertFalse($useStreamedCopyProperty->getValue($this->adapter));
 	}
 
 	/**
@@ -91,19 +102,19 @@ class ZipFileTest extends TestWithEvents
 	/**
 	 * Triggered before adapter has been loaded.
 	 *
-	 * @param   ZipFile     $adapter   Adapter being instatiated
-	 * @param   string      $location  Path to the zip file
-	 * @param   ZipArchive  $file      Source file.
-	 * @param   string      $prefix    Optional prefix
+	 * @param   WebDAV  $adapter          Adapter being instatiated
+	 * @param   Client  $client           WebDAV client
+	 * @param   string  $prefix           Optional prefix
+	 * @param   bool    $useStreamedCopy  Use streamd copy. defaults to true.
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemBeforeLoadZipFileAdapter(ZipFile $adapter, &$location, ZipArchive $file = null, &$prefix = null)
+	public function onFlysystemBeforeLoadWebDAVAdapter(WebDAV $adapter, Client $client, &$prefix = null, &$useStreamedCopy = true)
 	{
 		$this->calledEvents[__FUNCTION__] = func_get_args();
 
-		$location = str_replace('.zip', '.test.zip', $location);
 		$prefix = 'modifiedPrefix';
+		$useStreamedCopy = false;
 	}
 
 	/**
@@ -121,14 +132,14 @@ class ZipFileTest extends TestWithEvents
 	/**
 	 * Triggered after adapter has been loaded.
 	 *
-	 * @param   ZipFile     $adapter   Adapter being instatiated
-	 * @param   string      $location  Path to the zip file
-	 * @param   ZipArchive  $file      Source file.
-	 * @param   string      $prefix    Optional prefix
+	 * @param   WebDAV  $adapter          Adapter being instatiated
+	 * @param   Client  $client           WebDAV client
+	 * @param   string  $prefix           Optional prefix
+	 * @param   bool    $useStreamedCopy  Use streamd copy. defaults to true.
 	 *
 	 * @return  void
 	 */
-	public function onFlysystemAfterLoadZipFileAdapter(ZipFile $adapter, $location, ZipArchive $file = null, $prefix = null)
+	public function onFlysystemAfterLoadWebDAVAdapter(WebDAV $adapter, Client $client, $prefix = null, $useStreamedCopy = true)
 	{
 		$this->calledEvents[__FUNCTION__] = func_get_args();
 	}

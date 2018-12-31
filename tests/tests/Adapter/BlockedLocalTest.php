@@ -7,10 +7,10 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit\Adapter;
+namespace Phproberto\Joomla\Flysystem\Tests\Adapter;
 
 use Phproberto\Joomla\Flysystem\Adapter\BlockedLocal;
-use Phproberto\Joomla\Flysystem\Tests\Unit\Adapter\Traits\IsBlockedInsideRoot;
+use Phproberto\Joomla\Flysystem\Tests\Adapter\Traits\IsBlockedInsideRoot;
 use LogicException;
 
 /**

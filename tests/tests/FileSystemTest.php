@@ -7,7 +7,7 @@
  * @license    See COPYING.txt
  */
 
-namespace Phproberto\Joomla\Flysystem\Tests\Unit;
+namespace Phproberto\Joomla\Flysystem\Tests;
 
 use League\Flysystem\AdapterInterface;
 use Phproberto\Joomla\Flysystem\Filesystem;
