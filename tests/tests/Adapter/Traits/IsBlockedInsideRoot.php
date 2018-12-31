@@ -3,7 +3,7 @@
  * @package     Phproberto.Joomla-Flysystem
  * @subpackage  Tests.Unit.Adapter.Traits
  *
- * @copyright  Copyright (C) 2017 Roberto Segura López, Inc. All rights reserved.
+ * @copyright  Copyright (C) 2018 Roberto Segura López, Inc. All rights reserved.
  * @license    See COPYING.txt
  */
 
